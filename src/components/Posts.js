@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Container, Row, Button, Col, ButtonGroup, Card } from 'react-bootstrap'
+import { connect } from 'react-redux'
 
-export default class Posts extends Component {
+class Posts extends Component {
   render() {
     return (
       <Container>
@@ -14,3 +15,5 @@ export default class Posts extends Component {
     )
   }
 }
+
+export default connect()(Posts)
