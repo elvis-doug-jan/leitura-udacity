@@ -1,13 +1,17 @@
 import { RECEIVE_ALL_POSTS } from './../actions/posts'
-import axios from 'axios'
 
-export default async function posts(state = null, action) {
+export default async function posts(state = {}, action) {
   switch (action.type) {
     case RECEIVE_ALL_POSTS:
+    console.log('////////////////////',  {
+      ...state,
+      ...action.posts
+    })
       return {
-        ...state
+        ...state,
+        ...action.posts
       }
-      default:
+    default:
       return state
-    }
+  }
 }

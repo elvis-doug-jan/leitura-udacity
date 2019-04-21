@@ -1,15 +1,16 @@
-import { getAllPosts } from '../utils/posts'
-// import { receiveUsers } from '../actions/users'
-// import { receiveTweets } from '../actions/tweets'
-// import { setAuthedUser } from '../actions/authedUser'
-import { showLoading, hideLoading } from 'react-redux-loading'
+import { getInitialData } from '../utils/posts'
+import { receiveAllPosts } from '../actions/posts'
+import { showLoading } from 'react-redux-loading'
 
-const AUTHED_ID = 'tylermcginnis'
+// const AUTHED_ID = 'tylermcginnis'
 
 export function handleInitialData() {
   return (dispatch) => {
     dispatch(showLoading())
-    return getAllPosts()
-      .then(res => console.log(res.data))
+    return getInitialData()
+      .then(({ posts }) => {
+        console.log('XXXXXXXXXXXXXXXXXXXXX', { posts })
+        dispatch(receiveAllPosts({ posts }))
+      })
   }
 }

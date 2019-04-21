@@ -1,5 +1,9 @@
-import axios from 'axios'
+import { getAllPosts } from './_DATA'
 
-export async function getAllPosts() {
-  return axios.get('http://localhost:3001/posts', { headers: { 'Authorization': 'whatever-you-want' } })
+export function getInitialData() {
+  return Promise.all([
+    getAllPosts()
+  ]).then(([posts]) => ({
+    posts
+  }))
 }

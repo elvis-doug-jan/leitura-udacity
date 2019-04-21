@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Container, Row, Button, Col, ButtonGroup, Card } from 'react-bootstrap'
+import { Container, Col, Card } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 class Posts extends Component {
   render() {
+    console.log('PROPS POSTS COMPONENT', this.props)
     return (
       <Container>
         <Col>
@@ -16,4 +17,8 @@ class Posts extends Component {
   }
 }
 
-export default connect()(Posts)
+function mapStateToProps({ posts }, props) {
+  console.log(props)
+}
+
+export default connect(mapStateToProps)(Posts)
