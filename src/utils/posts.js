@@ -1,4 +1,4 @@
-import { getAllPosts } from './_DATA'
+import { getAllPosts } from './ApiCalls'
 
 export function getInitialData() {
   return Promise.all([
