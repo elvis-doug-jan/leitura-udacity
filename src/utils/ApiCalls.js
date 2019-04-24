@@ -6,6 +6,9 @@ export async function getAllPosts() {
       'Authorization': 'whatever-you-want'
     }
   })
-    .then(res => res.data)
-    .catch(err => console.log('Erro ao consultar API de posts', err))
+    .then(res => {
+      console.warn('CHAMADA DA API', res.data)
+      return res.data
+    })
+    .catch(err => console.error('Erro ao consultar API de posts', err))
 }

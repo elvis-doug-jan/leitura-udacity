@@ -1,16 +1,23 @@
 import { RECEIVE_ALL_POSTS } from './../actions/posts'
 
-export default async function posts(state = {}, action) {
+const initialState = [
+  {
+    author: "",
+    body: "",
+    category: "",
+    commentCount: 2,
+    deleted: false,
+    id: "",
+    timestamp: 0,
+    title: "",
+    voteScore: 0
+  }
+]
+
+export default function posts(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_ALL_POSTS:
-    console.log('////////////////////',  {
-      ...state,
-      ...action.posts
-    })
-      return {
-        ...state,
-        ...action.posts
-      }
+      return action.posts
     default:
       return state
   }

@@ -9,8 +9,7 @@ export function handleInitialData() {
     dispatch(showLoading())
     return getInitialData()
       .then(({ posts }) => {
-        console.log('XXXXXXXXXXXXXXXXXXXXX', { posts })
-        dispatch(receiveAllPosts({ posts }))
+        dispatch(receiveAllPosts(posts))
       })
   }
 }
