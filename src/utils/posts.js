@@ -1,9 +1,11 @@
-import { getAllPosts } from './ApiCalls'
+import { getAllPosts, getAllCategories } from './ApiCalls'
 
 export function getInitialData() {
   return Promise.all([
-    getAllPosts()
-  ]).then(([posts]) => ({
-    posts
+    getAllPosts(),
+    getAllCategories()
+  ]).then(([posts, categories]) => ({
+    posts,
+    categories
   }))
 }

@@ -6,8 +6,16 @@ export async function getAllPosts() {
       'Authorization': 'whatever-you-want'
     }
   })
-    .then(res => {
-      return res.data
-    })
+    .then(res => res.data)
     .catch(err => console.error('Erro ao consultar API de posts', err))
+}
+
+export async function getAllCategories() {
+  return axios.get('http://localhost:4000/categories', {
+    headers: {
+      'Authorization': 'whatever-you-want'
+    }
+  })
+  .then(res => res.data)
+  .catch(err => console.warn('Erro ao consultart lista de categorias', err))
 }
