@@ -3,44 +3,36 @@ import { Container, Col, Card } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { receiveAllPosts } from './../actions/posts'
+import moment from 'moment'
 
 class Posts extends Component {
-  componentDidMount() {
-    console.log('PROPS', this.props)
-  }
-
   render() {
-    console.log('PROPS POSTS COMPONENT', this.props)
     return (
       <Container>
         <Col>
-          <Card>
-            <h1>Post example</h1>
-            {/* {this.props.posts.map(post => (
-              <h6>testes</h6>
-            ))} */}
-          </Card>
+          {this.props.posts.map(post => (
+            <Card key={post.id}>
+              <h4>{post.title}</h4>
+              <span>By: <b>{post.author}</b></span>
+              <span>
+                in <i>{post.category}</i> on <i>{moment(post.timestamp).format('DD/MM/YYYY')} {moment(post.timestamp).format('HH:mm')}</i>
+              </span>
+              <br />
+              <div>{post.body}</div>
+              <b>Votes: {post.voteScore} Comments: {post.commentCount}</b>
+            </Card>
+          ))}
         </Col>
       </Container>
     )
   }
 }
 
-// const Posts = props => (
-//   <Container>
-//     <Col>
-//       <Card>
-//         <h1>Post example</h1>
-//         <h3>Props: {props[0].title}</h3>
-//       </Card>
-//     </Col>
-//   </Container>
-// )
-
-const mapStateToProps = async state => {
-  state.posts.map(post => console.warn('UM POST', post))
-  return state
+const mapStateToProps = state => {
+  return {
+    posts: state.posts
+  }
 }
-const mapDispatchToProps = async dispatch => await bindActionCreators({ receiveAllPosts }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ receiveAllPosts }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)
