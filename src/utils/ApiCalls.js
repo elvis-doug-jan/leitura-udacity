@@ -19,3 +19,13 @@ export async function getAllCategories() {
   .then(res => res.data)
   .catch(err => console.warn('Erro ao consultart lista de categorias', err))
 }
+
+export async function getAllComments(postId) {
+  return axios.get(`http://localhost:4000/posts/${postId}/comments`, {
+    headers: {
+      'Authorization': 'whatever-you-want'
+    }
+  })
+  .then(res => res.data)
+  .catch(err => console.warn('Erro ao consultart lista de comentários', err))
+}

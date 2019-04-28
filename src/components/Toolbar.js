@@ -18,6 +18,7 @@ class Toolbar extends Component {
               <Button key={index} variant='light'>{category.name}</Button>
             ))}
           </ButtonGroup>
+          <Button>New Post</Button>
         </Col>
       </Row>
     )

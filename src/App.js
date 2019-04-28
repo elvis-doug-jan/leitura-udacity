@@ -6,6 +6,7 @@ import Posts from './components/Posts'
 
 class App extends Component {
   componentDidMount() {
+    // console.log(this.props)
     this.props.dispatch(handleInitialData())
   }
 
@@ -19,9 +20,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(...posts) {
+function mapStateToProps(store) {
+  console.log(">>>>>> APP", store)
   return { 
-    posts
+    store
   }
 }
 

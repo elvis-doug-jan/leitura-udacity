@@ -10,10 +10,8 @@ export function handleInitialData() {
     dispatch(showLoading())
     return getInitialData()
       .then(({ posts, categories }) => {
-        // console.log('CATEGORIES', categories)
         dispatch(receiveAllPosts(posts))
         dispatch(receiveAllCategories(categories))
-        // dispatch(receiveAllCategories())
       })
   }
 }
