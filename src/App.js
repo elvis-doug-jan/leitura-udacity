@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { handleInitialData } from './actions/index'
 import { connect } from 'react-redux'
 import Toolbar from './components/Toolbar'
 import Posts from './components/Posts'
+import Comment from './components/Comments'
 
 class App extends Component {
   componentDidMount() {
@@ -12,17 +14,20 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Toolbar />
-        <Posts />
-      </div>
-    );
+      <Router>
+        <div>
+          <Route path='/' exact component={Toolbar}/>
+          <Route path='/' exact component={Posts}/>
+        </div>
+        <Route path='/comments/' exact component={Comment} />
+      </Router>
+    )
   }
 }
 
 function mapStateToProps(store) {
   console.log(">>>>>> APP", store)
-  return { 
+  return {
     store
   }
 }

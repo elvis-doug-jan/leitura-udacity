@@ -9,39 +9,43 @@ import { comments } from './../reducers/comments'
 import moment from 'moment'
 import './../styles/Post.css'
 
-const getCommentsPost = async id => {
-  await getAllComments(id)
-    .then(listComments => comments({}, receiveAllComments(listComments)))
-    .catch(err => console.log(err))
+class Posts extends Component {
+  showCommentsPost = async id => {
+    await getAllComments(id)
+      .then(listComments => comments({}, receiveAllComments(listComments)))
+      .catch(err => console.log(err))
+
+    this.props.history.push(`/comments/`)
+  }
+
+  render() {
+    return (
+      <Container>
+        <Col>
+          {this.props.posts.map(post => (
+            <Card key={post.id} className="cardContent">
+              <h4>{post.title}</h4>
+              <span>By: <b>{post.author}</b></span>
+              <span>
+                in <i>{post.category}</i> on <i>{moment(post.timestamp).format('DD/MM/YYYY')} {moment(post.timestamp).format('HH:mm')}</i>
+              </span>
+              <br />
+              <div>{post.body}</div>
+              <span>
+                <b>Votes: {post.voteScore} Comments: {post.commentCount}</b>
+                <Button variant="outline-primary" onClick={() => this.showCommentsPost(post.id)}>
+                  Show comments
+            </Button>
+              </span>
+            </Card>
+          ))}
+        </Col>
+      </Container>
+    )
+  }
 }
 
-const Posts = props => (
-  <Container>
-    <Col>
-      {props.posts.map(post => (
-        <Card key={post.id} className="cardContent">
-          <h4>{post.title}</h4>
-          <span>By: <b>{post.author}</b></span>
-          <span>
-            in <i>{post.category}</i> on <i>{moment(post.timestamp).format('DD/MM/YYYY')} {moment(post.timestamp).format('HH:mm')}</i>
-          </span>
-          <br />
-          <div>{post.body}</div>
-          <span>
-            <b>Votes: {post.voteScore} Comments: {post.commentCount}</b>
-            <Button variant="outline-primary" onClick={() => getCommentsPost(post.id)}>
-              Show comments
-            </Button>
-          </span>
-        </Card>
-      ))}
-    </Col>
-
-  </Container>
-)
-
 const mapStateToProps = state => {
-  console.warn('STATE', state)
   return {
     posts: state.posts
   }
