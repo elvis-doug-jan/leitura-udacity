@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { receiveAllComments } from './../actions/comments'
@@ -6,11 +6,11 @@ import { receiveAllComments } from './../actions/comments'
 class Comment extends Component {
 
   componentDidMount() {
-    console.log('PROPS COMMENT', this.props)
+    this.props.receiveAllComments(this.props.match.params.id)
   }
 
   render() {
-    return(
+    return (
       <div>
         <h1>TESTEs</h1>
       </div>
@@ -19,11 +19,10 @@ class Comment extends Component {
 }
 
 
-const mapStateToProps = state => {
-  console.warn('STATE', state)
-  // return {
-  //   posts: state.posts
-  // }
+const mapStateToProps = ({ comments }) => {
+  return {
+    comments
+  }
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({ receiveAllComments }, dispatch)

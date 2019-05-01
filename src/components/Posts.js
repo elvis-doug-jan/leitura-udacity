@@ -2,20 +2,13 @@ import React, { Component } from 'react'
 import { Container, Col, Card, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getAllComments } from './../utils/ApiCalls'
 import { receiveAllPosts } from './../actions/posts'
-import { receiveAllComments } from './../actions/comments'
-import { comments } from './../reducers/comments'
 import moment from 'moment'
 import './../styles/Post.css'
 
 class Posts extends Component {
-  showCommentsPost = async id => {
-    await getAllComments(id)
-      .then(listComments => comments({}, receiveAllComments(listComments)))
-      .catch(err => console.log(err))
-
-    this.props.history.push(`/comments/`)
+  showCommentsPost = id => {
+    this.props.history.push(`/comments/${id}`)
   }
 
   render() {

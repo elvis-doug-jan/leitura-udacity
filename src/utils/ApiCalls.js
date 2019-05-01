@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export async function getAllPosts() {
-  return axios.get('http://localhost:4000/posts', {
+  return axios.get('http://localhost:3001/posts', {
     headers: {
       'Authorization': 'whatever-you-want'
     }
@@ -11,7 +11,7 @@ export async function getAllPosts() {
 }
 
 export async function getAllCategories() {
-  return axios.get('http://localhost:4000/categories', {
+  return axios.get('http://localhost:3001/categories', {
     headers: {
       'Authorization': 'whatever-you-want'
     }
@@ -21,7 +21,7 @@ export async function getAllCategories() {
 }
 
 export async function getAllComments(postId) {
-  return axios.get(`http://localhost:4000/posts/${postId}/comments`, {
+  return axios.get(`http://localhost:3001/posts/${postId}/comments`, {
     headers: {
       'Authorization': 'whatever-you-want'
     }

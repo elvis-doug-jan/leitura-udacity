@@ -3,10 +3,9 @@ import { receiveAllPosts } from '../actions/posts'
 import { receiveAllCategories } from '../actions/categories'
 import { showLoading } from 'react-redux-loading'
 
-// const AUTHED_ID = 'tylermcginnis'
-
 export function handleInitialData() {
   return (dispatch) => {
+    console.log(dispatch)
     dispatch(showLoading())
     return getInitialData()
       .then(({ posts, categories }) => {
