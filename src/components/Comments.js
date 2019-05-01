@@ -7,12 +7,15 @@ class Comment extends Component {
 
   componentDidMount() {
     this.props.receiveAllComments(this.props.match.params.id)
+    console.log('PROPS COMPONENTS', this.props)
   }
 
   render() {
     return (
       <div>
-        <h1>TESTEs</h1>
+        {this.props.comments.map(comment => (
+          <h4 key={comment.id}>{comment.id}</h4>
+        ))}
       </div>
     )
   }
