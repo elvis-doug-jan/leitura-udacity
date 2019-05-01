@@ -1,21 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Button, Row, Col } from 'react-bootstrap'
-import { Router, Route } from 'react-router-dom'
-import Home from './components/Home'
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { handleInitialData } from './actions/index'
+import { connect } from 'react-redux'
 import Toolbar from './components/Toolbar'
 import Posts from './components/Posts'
+import Comment from './components/Comments'
 
 class App extends Component {
+  componentDidMount() {
+    // console.log(this.props)
+    this.props.dispatch(handleInitialData())
+  }
+
   render() {
     return (
-      <div>
-        <Toolbar />
-        <Posts />
-      </div>
-    );
+      <Router>
+        <div>
+          <Route path='/' exact component={Toolbar}/>
+          <Route path='/' exact component={Posts}/>
+        </div>
+        <Route path='/comments/' exact component={Comment} />
+      </Router>
+    )
   }
 }
 
-export default App;
+function mapStateToProps(store) {
+  console.log(">>>>>> APP", store)
+  return {
+    store
+  }
+}
+
+export default connect(mapStateToProps)(App)
