@@ -38,11 +38,7 @@ class Posts extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    posts: state.posts
-  }
-}
+const mapStateToProps = ({ posts }) => ({ posts })
 
 const mapDispatchToProps = dispatch => bindActionCreators({ receiveAllPosts }, dispatch)
 

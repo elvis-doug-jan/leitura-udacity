@@ -9,6 +9,7 @@ import Comment from './components/Comments'
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData())
+    console.log('PROPS APP', this.props)
   }
 
   render() {

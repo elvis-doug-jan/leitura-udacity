@@ -1,4 +1,4 @@
-import { getAllComments } from './../utils/ApiCalls'
+import { getAllComments, newCommentApi, deleteCommentApi } from './../utils/ApiCalls'
 export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS'
 
 export function receiveAllComments(id) {
@@ -12,4 +12,12 @@ export function receiveAllComments(id) {
       )
       .catch(err => console.warn('ERRO AO DISPARAR ACTION DE COMENTÁRIOS!', err))
   }
+}
+
+export function newComment(comment) {
+  newCommentApi(comment)
+}
+
+export function deleteComment(id) {
+  deleteCommentApi(id)
 }

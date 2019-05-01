@@ -1,8 +1,9 @@
-export const RECEIVE_USERS = 'RECEIVE_USERS'
+export const RECEIVE_USER_LOGGED = 'RECEIVE_USER_LOGGED'
 
-export function receiveUsers (users) {
+export function receiveUserLogged (userLogged) {
+  console.warn('>>>>>>>>>>>>.', userLogged)
   return {
-    type: RECEIVE_USERS,
-    users
+    type: RECEIVE_USER_LOGGED,
+    userLogged
   }
 }
