@@ -6,8 +6,8 @@ import { showLoading } from 'react-redux-loading'
 
 export function handleInitialData() {
   return (dispatch) => {
-    dispatch(showLoading())
     dispatch(receiveUserLogged({ userLogged: 'Yourself' }))
+    dispatch(showLoading())
     return getInitialData()
       .then(({ posts, categories }) => {
         dispatch(receiveAllPosts(posts))

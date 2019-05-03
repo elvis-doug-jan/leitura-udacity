@@ -54,7 +54,10 @@ class Comment extends Component {
             <b>On <i>{moment(comment.timestamp).format('DD/MM/YYYY')}</i></b>
             <p>{comment.body}</p>
             <button onClick={() => this.removeComment(comment.id)}>Delete Comment</button>
-            <button onClick={() => this.editComment()}>Edit Comment</button>
+            {this.state.userLogged === comment.author
+              ? <button onClick={() => this.editComment()}>Edit Comment</button>
+              : <button disabled> Edit Comment</button>
+            }
           </div>
         ))}
         <textarea onChange={event => this.newComment(event.target.value)} />
