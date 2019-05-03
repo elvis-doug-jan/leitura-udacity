@@ -1,4 +1,4 @@
-import { getAllComments, newCommentApi, deleteCommentApi } from './../utils/ApiCalls'
+import { getAllComments, newCommentApi, deleteCommentApi, saveEditCommentApi } from './../utils/ApiCalls'
 export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS'
 
 export function receiveAllComments(id) {
@@ -20,4 +20,9 @@ export function newComment(comment) {
 
 export function deleteComment(id) {
   deleteCommentApi(id)
+}
+
+export function saveCommentEdit(id, comment) {
+  console.log('ACTION', comment)
+  saveEditCommentApi(id, comment)
 }

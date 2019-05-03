@@ -14,6 +14,7 @@ const initialState = [
 ]
 
 export default function comments(state = initialState, action) {
+  console.log('REDUCER', action)
   switch (action.type) {
     case RECEIVE_ALL_COMMENTS:
       return action.comments

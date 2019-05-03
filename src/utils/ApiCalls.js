@@ -37,3 +37,9 @@ export function deleteCommentApi(id) {
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO EXCLUIR COMENTARIO', err))
 }
+
+export function saveEditCommentApi(id, comment) {
+  axios.put(`${urlApi}comments/${id}`, { body: comment }, { headers })
+    .then(res => res.data)
+    .catch(err => console.warn('ERRO AO ATUALIZAR COMENTÁRIO', err))
+}

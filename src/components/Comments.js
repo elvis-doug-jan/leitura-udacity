@@ -2,14 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { receiveUserLogged } from './../actions/users'
-import { receiveAllComments, newComment, deleteComment } from './../actions/comments'
+import { receiveAllComments, newComment, deleteComment, saveCommentEdit } from './../actions/comments'
 import moment from 'moment'
 
 class Comment extends Component {
 
   state = {
     newComment: '',
-    userLogged: ''
+    userLogged: '',
+    commentEdited: false,
+    commentEditId: ''
   }
 
   componentDidMount() {
@@ -41,9 +43,17 @@ class Comment extends Component {
     deleteComment(id)
   }
 
-  editComment = () => {
+  editComment = comment => {
+    this.setState({ commentEditId: comment.id })
+    this.setState({ commentEdit: true })
+
+    document.getElementById('editComment').value = comment.body
   }
 
+  saveEditComment = () => {
+    // console.log('NEW COMMENT', this.state.newComment)
+    saveCommentEdit(this.state.commentEditId, this.state.newComment)
+  }
 
   render() {
     return (
@@ -55,14 +65,17 @@ class Comment extends Component {
             <p>{comment.body}</p>
             <button onClick={() => this.removeComment(comment.id)}>Delete Comment</button>
             {this.state.userLogged === comment.author
-              ? <button onClick={() => this.editComment()}>Edit Comment</button>
+              ? <button onClick={() => this.editComment(comment)}>Edit Comment</button>
               : <button disabled> Edit Comment</button>
             }
           </div>
         ))}
-        <textarea onChange={event => this.newComment(event.target.value)} />
+        <textarea onChange={event => this.newComment(event.target.value)} id='editComment' />
         <br />
-        <button onClick={() => this.postNewComment()}>New Comment</button>
+        {this.state.commentEdit
+          ? <button onClick={() => this.saveEditComment(this.state.comment)}>Save Comment</button>
+          : <button onClick={() => this.postNewComment()}>New Comment</button>
+        }
       </div>
     )
   }
