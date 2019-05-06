@@ -33,13 +33,13 @@ export async function newCommentApi(comment) {
 }
 
 export function deleteCommentApi(id) {
-  axios.delete(`${urlApi}comments/${id}`, { headers })
+  return axios.delete(`${urlApi}comments/${id}`, { headers })
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO EXCLUIR COMENTARIO', err))
 }
 
 export function saveEditCommentApi(id, comment) {
-  axios.put(`${urlApi}comments/${id}`, { body: comment }, { headers })
+  return axios.put(`${urlApi}comments/${id}`, { body: comment }, { headers })
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO ATUALIZAR COMENTÁRIO', err))
 }

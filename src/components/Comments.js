@@ -19,7 +19,7 @@ class Comment extends Component {
     this.setState({ userLogged: this.props.user.userLogged })
   }
 
-  newComment = comment => {
+  newCommentState = comment => {
     setTimeout(() => {
       this.setState({ newComment: comment })
     }, 500)
@@ -36,11 +36,11 @@ class Comment extends Component {
       voteScore: 0
     }
 
-    newComment(comment)
+    this.props.newComment(comment)
   }
 
   removeComment = id => {
-    deleteComment(id)
+    this.props.deleteComment(id)
   }
 
   editComment = comment => {
@@ -51,8 +51,8 @@ class Comment extends Component {
   }
 
   saveEditComment = () => {
-    // console.log('NEW COMMENT', this.state.newComment)
-    saveCommentEdit(this.state.commentEditId, this.state.newComment)
+    this.props.saveCommentEdit(this.state.commentEditId, this.state.newComment)
+    document.getElementById('editComment').value = ''
   }
 
   render() {
@@ -70,7 +70,7 @@ class Comment extends Component {
             }
           </div>
         ))}
-        <textarea onChange={event => this.newComment(event.target.value)} id='editComment' />
+        <textarea onChange={event => this.newCommentState(event.target.value)} id='editComment' />
         <br />
         {this.state.commentEdit
           ? <button onClick={() => this.saveEditComment(this.state.comment)}>Save Comment</button>
@@ -84,7 +84,7 @@ class Comment extends Component {
 const mapStateToProps = ({ comments, user }) => ({ comments, user })
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-  { receiveAllComments, receiveUserLogged },
+  { receiveAllComments, receiveUserLogged, newComment, deleteComment, saveCommentEdit },
   dispatch
 )
 

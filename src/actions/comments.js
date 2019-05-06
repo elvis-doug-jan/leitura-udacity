@@ -1,5 +1,7 @@
 import { getAllComments, newCommentApi, deleteCommentApi, saveEditCommentApi } from './../utils/ApiCalls'
 export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS'
+export const NEW_COMMENT = 'NEW_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export function receiveAllComments(id) {
   return dispatch => {
@@ -15,14 +17,44 @@ export function receiveAllComments(id) {
 }
 
 export function newComment(comment) {
-  newCommentApi(comment)
+  return dispatch => {
+    return newCommentApi(comment)
+      .then(comment => {
+        return getAllComments(comment.parentId)
+          .then(comments => dispatch({
+            type: RECEIVE_ALL_COMMENTS,
+            comments
+          }))
+      })
+  }
 }
 
-export function deleteComment(id) {
-  deleteCommentApi(id)
+export function deleteComment(commentId) {
+  return dispatch => {
+    return deleteCommentApi(commentId)
+      .then(commentDeleted => {
+        return getAllComments(commentDeleted.parentId)
+          .then(comments =>
+            dispatch({
+              type: RECEIVE_ALL_COMMENTS,
+              comments
+            })
+          )
+      })
+  }
 }
 
 export function saveCommentEdit(id, comment) {
-  console.log('ACTION', comment)
-  saveEditCommentApi(id, comment)
+  return dispatch => {
+    return saveEditCommentApi(id, comment)
+      .then(commentEdited => {
+        return getAllComments(commentEdited.parentId)
+          .then(comments =>
+            dispatch({
+              type: RECEIVE_ALL_COMMENTS,
+              comments
+            })
+          )
+      })
+  }
 }
