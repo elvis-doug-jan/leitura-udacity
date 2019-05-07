@@ -43,3 +43,9 @@ export function saveEditCommentApi(id, comment) {
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO ATUALIZAR COMENTÁRIO', err))
 }
+
+export function voteCommentApi(id, vote) {
+  return axios.post(`${urlApi}comments/${id}`, { option: vote }, { headers })
+    .then(res => res.data)
+    .catch(err => console.warn('ERRO AO VOTAR COMENTÁRIO', err))
+}

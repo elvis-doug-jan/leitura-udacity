@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { receiveUserLogged } from './../actions/users'
-import { receiveAllComments, newComment, deleteComment, saveCommentEdit } from './../actions/comments'
+import { receiveAllComments, newComment, deleteComment, saveCommentEdit, voteComment } from './../actions/comments'
 import moment from 'moment'
 
 class Comment extends Component {
@@ -55,19 +55,26 @@ class Comment extends Component {
     document.getElementById('editComment').value = ''
   }
 
+  voteComment = (id, vote) => {
+    this.props.voteComment(id, vote)
+  }
+
   render() {
     return (
       <div>
         {this.props.comments.map(comment => (
           <div key={comment.id}>
             <h3>{comment.author}</h3>
-            <b>On <i>{moment(comment.timestamp).format('DD/MM/YYYY')}</i></b>
+            <b>On <i>{moment(comment.timestamp).format('DD/MM/YYYY')}</i></b><br/>
+            <i>Vote Score: {comment.voteScore}</i>
             <p>{comment.body}</p>
             <button onClick={() => this.removeComment(comment.id)}>Delete Comment</button>
             {this.state.userLogged === comment.author
               ? <button onClick={() => this.editComment(comment)}>Edit Comment</button>
               : <button disabled> Edit Comment</button>
             }
+            <button onClick={() => this.voteComment(comment.id, 'upVote')}>Like</button>
+            <button onClick={() => this.voteComment(comment.id, 'downVote')}>Deslike</button>
           </div>
         ))}
         <textarea onChange={event => this.newCommentState(event.target.value)} id='editComment' />
@@ -84,7 +91,7 @@ class Comment extends Component {
 const mapStateToProps = ({ comments, user }) => ({ comments, user })
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-  { receiveAllComments, receiveUserLogged, newComment, deleteComment, saveCommentEdit },
+  { receiveAllComments, receiveUserLogged, newComment, deleteComment, saveCommentEdit, voteComment },
   dispatch
 )
 
