@@ -5,6 +5,10 @@ import { connect } from 'react-redux'
 import { getAllCategories } from './../utils/ApiCalls'
 
 class Toolbar extends Component {
+  newPostPage = () => {
+    this.props.history.push(`/new-post`)
+  }
+
   render() {
     return (
       <Row>
@@ -18,7 +22,7 @@ class Toolbar extends Component {
               <Button key={index} variant='light'>{category.name}</Button>
             ))}
           </ButtonGroup>
-          <Button>New Post</Button>
+          <Button onClick={() => this.newPostPage()}>New Post</Button>
         </Col>
       </Row>
     )

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Toolbar from './components/Toolbar'
 import Posts from './components/Posts'
 import Comment from './components/Comments'
+import NewPost from './components/NewPost'
 
 class App extends Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class App extends Component {
           <Route path='/' exact component={Posts}/>
         </div>
         <Route path='/comments/:id' exact component={Comment} />
+        <Route path='/new-post' exact component={NewPost} />
       </Router>
     )
   }
