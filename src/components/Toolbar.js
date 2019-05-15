@@ -23,6 +23,7 @@ class Toolbar extends Component {
         <Col>
         <span>Categories </span>
           <ButtonGroup>
+            <Button variant='light' onClick={() => this.filterPosts('all')}>All posts</Button>
             {this.props.categories.map((category, index) => (
               <Button key={index} variant='light' onClick={() => this.filterPosts(category.name)}>{category.name}</Button>
             ))}

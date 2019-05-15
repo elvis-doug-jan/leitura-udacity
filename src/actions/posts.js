@@ -23,14 +23,19 @@ export function newPost(post) {
   }
 }
 
-export function filterPostsByCaterogy (category) {
+export function filterPostsByCaterogy(category) {
   return dispatch => {
     return getAllPosts()
       .then(posts => {
-        let filteredPosts = posts.filter(post => post.category === category)
+        let postsList = []
+        if (category !== 'all') {
+          postsList = posts.filter(post => post.category === category)
+        } else {
+          postsList = posts
+        }
         return dispatch({
           type: RECEIVE_ALL_POSTS,
-          posts: filteredPosts
+          posts: postsList
         })
       })
   }
