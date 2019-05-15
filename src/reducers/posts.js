@@ -1,4 +1,4 @@
-import { RECEIVE_ALL_POSTS } from './../actions/posts'
+import { RECEIVE_ALL_POSTS, NEW_POST } from './../actions/posts'
 
 const initialState = [
   {

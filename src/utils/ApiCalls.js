@@ -49,3 +49,9 @@ export function voteCommentApi(id, vote) {
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO VOTAR COMENTÁRIO', err))
 }
+
+export function newPostApi(post) {
+  return axios.post(`${urlApi}posts`, post, { headers })
+    .then(res => console.log('CADASTROU NOVO POST', res.data))
+    .catch(err => console.warn('ERRO', err))
+}
