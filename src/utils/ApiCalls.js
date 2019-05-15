@@ -9,7 +9,7 @@ const headers = {
 
 export async function getAllPosts() {
   return axios.get(`${urlApi}posts`, { headers })
-    .then(res => res.data)
+    .then(res => res.data.sort((a, b) => a.voteScore < b.voteScore))
     .catch(err => console.error('Erro ao consultar API de posts', err))
 }
 

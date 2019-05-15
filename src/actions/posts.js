@@ -1,5 +1,4 @@
 import { newPostApi, getAllPosts } from './../utils/ApiCalls'
-import { dispatch } from 'rxjs/internal/observable/pairs';
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
 
 export function receiveAllPosts(posts) {
