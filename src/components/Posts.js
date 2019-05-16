@@ -3,10 +3,25 @@ import { Container, Col, Card, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { receiveAllPosts, votePost } from './../actions/posts'
+import EditPost from './EditPost'
 import moment from 'moment'
 import './../styles/Post.css'
 
 class Posts extends Component {
+  state = {
+    editPost: false,
+    // author: '',
+    // body: '',
+    // category: '',
+    // commentCount: 0,
+    // deleted: false,
+    // id: '',
+    // timestamp: 0,
+    // title: '',
+    // voteScore: 0
+    post: {}
+  }
+
   showCommentsPost = id => {
     this.props.history.push(`/comments/${id}`)
   }
@@ -15,9 +30,19 @@ class Posts extends Component {
     this.props.votePost(id, vote)
   }
 
+  editPost = post => {
+    this.setState({ editPost: true })
+    this.setState({ post })
+    console.log(this.state.post)
+  }
+
   render() {
     return (
       <Container>
+        {this.state.editPost
+          ? (<EditPost post={this.state.post}/>)
+          : (<h1>NADA</h1>)
+        }
         <Col>
           {this.props.posts.map(post => (
             <Card key={post.id} className="cardContent">
@@ -35,6 +60,7 @@ class Posts extends Component {
             </Button>
                 <Button onClick={() => this.votePost(post.id, 'upVote')}>Like</Button>
                 <Button onClick={() => this.votePost(post.id, 'downVote')}>Deslike</Button>
+                <Button variant="info" onClick={() => this.editPost(post)}>Edit</Button>
               </span>
             </Card>
           ))}
