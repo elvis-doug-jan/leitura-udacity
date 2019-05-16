@@ -2,13 +2,17 @@ import React, { Component } from 'react'
 import { Container, Col, Card, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { receiveAllPosts } from './../actions/posts'
+import { receiveAllPosts, votePost } from './../actions/posts'
 import moment from 'moment'
 import './../styles/Post.css'
 
 class Posts extends Component {
   showCommentsPost = id => {
     this.props.history.push(`/comments/${id}`)
+  }
+
+  votePost = (id, vote) => {
+    this.props.votePost(id, vote)
   }
 
   render() {
@@ -29,6 +33,8 @@ class Posts extends Component {
                 <Button variant="outline-primary" onClick={() => this.showCommentsPost(post.id)}>
                   Show comments
             </Button>
+                <Button onClick={() => this.votePost(post.id, 'upVote')}>Like</Button>
+                <Button onClick={() => this.votePost(post.id, 'downVote')}>Deslike</Button>
               </span>
             </Card>
           ))}
@@ -40,6 +46,6 @@ class Posts extends Component {
 
 const mapStateToProps = ({ posts }) => ({ posts })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ receiveAllPosts }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ receiveAllPosts, votePost }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)

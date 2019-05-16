@@ -1,4 +1,4 @@
-import { newPostApi, getAllPosts } from './../utils/ApiCalls'
+import { newPostApi, getAllPosts, votePostApi } from './../utils/ApiCalls'
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
 
 export function receiveAllPosts(posts) {
@@ -36,6 +36,20 @@ export function filterPostsByCaterogy(category) {
           type: RECEIVE_ALL_POSTS,
           posts: postsList
         })
+      })
+  }
+}
+
+
+export function votePost(id, vote) {
+  return dispatch => {
+    return votePostApi(id, vote)
+      .then(() => {
+        return getAllPosts()
+          .then(posts => dispatch({
+            type: RECEIVE_ALL_POSTS,
+            posts
+          }))
       })
   }
 }

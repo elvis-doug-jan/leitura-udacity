@@ -9,7 +9,7 @@ const headers = {
 
 export async function getAllPosts() {
   return axios.get(`${urlApi}posts`, { headers })
-    .then(res => res.data.sort((a, b) => a.voteScore < b.voteScore))
+    .then(res => res.data)
     .catch(err => console.error('Erro ao consultar API de posts', err))
 }
 
@@ -54,4 +54,10 @@ export function newPostApi(post) {
   return axios.post(`${urlApi}posts`, post, { headers })
     .then(res => console.log('CADASTROU NOVO POST', res.data))
     .catch(err => console.warn('ERRO', err))
+}
+
+export function votePostApi(id, vote) {
+  return axios.post(`${urlApi}posts/${id}`, { option: vote }, { headers })
+    .then(res => res.data)
+    .catch(err => console.warn('ERRO AO VOTAR POST', err))
 }
