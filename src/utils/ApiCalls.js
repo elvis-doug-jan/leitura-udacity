@@ -61,3 +61,15 @@ export function votePostApi(id, vote) {
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO VOTAR POST', err))
 }
+
+export function putPostApi(post) {
+  return axios.put(`${urlApi}posts/${post.id}`, post, { headers })
+    .then(res => res.data)
+    .catch(err => console.warn('ERRO AO ATUALIZAR POST', err))
+}
+
+export function getOnePostId(id) {
+  return axios.get(`${urlApi}posts/${id}`, { headers })
+    .then(res => res.data)
+    .catch(err => console.warn('ERRO AO ENCONTRAR POST POR ID', err))
+}

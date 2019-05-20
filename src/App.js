@@ -6,6 +6,7 @@ import Toolbar from './components/Toolbar'
 import Posts from './components/Posts'
 import Comment from './components/Comments'
 import NewPost from './components/NewPost'
+import EditPost from './components/EditPost'
 
 class App extends Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class App extends Component {
         </div>
         <Route path='/comments/:id' exact component={Comment} />
         <Route path='/new-post' exact component={NewPost} />
+        <Route path='/edit-post/:id' exact component={EditPost} />
       </Router>
     )
   }
