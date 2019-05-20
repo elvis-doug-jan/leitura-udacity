@@ -1,4 +1,4 @@
-import { newPostApi, getAllPosts, votePostApi, putPostApi, getOnePostId } from './../utils/ApiCalls'
+import { newPostApi, getAllPosts, votePostApi, putPostApi, deletePostApi } from './../utils/ApiCalls'
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
 
 export function receiveAllPosts(posts) {
@@ -67,9 +67,15 @@ export function updatePost(post) {
   }
 }
 
-// export function getPostId(id) {
-//   return dispatch => {
-//     return getOnePostId(id)
-//       .then(() => )
-//   }
-// }
+export function deletePostId(id) {
+  return dispatch => {
+    return deletePostApi(id)
+      .then(() => {
+        return getAllPosts()
+          .then(posts => dispatch({
+            type: RECEIVE_ALL_POSTS,
+            posts
+          }))
+      })
+  }
+}

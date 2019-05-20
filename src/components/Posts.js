@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Col, Card, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { receiveAllPosts, votePost } from './../actions/posts'
+import { receiveAllPosts, votePost, deletePostId} from './../actions/posts'
 import EditPost from './EditPost'
 import moment from 'moment'
 import './../styles/Post.css'
@@ -36,6 +36,10 @@ class Posts extends Component {
     this.props.history.push(`/edit-post/${post.id}`)
   }
 
+  deletePost = id => {
+    this.props.deletePostId(id)
+  }
+
   render() {
     return (
       <Container>
@@ -60,6 +64,7 @@ class Posts extends Component {
                     <Button onClick={() => this.votePost(post.id, 'upVote')}>Like</Button>
                     <Button onClick={() => this.votePost(post.id, 'downVote')}>Deslike</Button>
                     <Button variant="info" onClick={() => this.editPost(post)}>Edit</Button>
+                    <Button variant="info" onClick={() => this.deletePost(post.id)}>Delete</Button>
                   </span>
                 </Card>
               ))}
@@ -73,6 +78,6 @@ class Posts extends Component {
 
 const mapStateToProps = ({ posts }) => ({ posts })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ receiveAllPosts, votePost }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ receiveAllPosts, votePost, deletePostId }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)

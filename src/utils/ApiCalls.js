@@ -73,3 +73,9 @@ export function getOnePostId(id) {
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO ENCONTRAR POST POR ID', err))
 }
+
+export function deletePostApi(id) {
+  return axios.delete(`${urlApi}posts/${id}`, {headers})
+    .then(res => res.data)
+    .catch(err => console.warn('ERRO AO DELETAR POST POR ID', err))
+}
