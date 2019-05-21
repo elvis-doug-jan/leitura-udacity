@@ -18,9 +18,6 @@ class Toolbar extends Component {
     return (
       <Row>
         <Col>
-          <Button variant='outline-primary'>Home</Button>
-        </Col>
-        <Col>
         <span>Categories </span>
           <ButtonGroup>
             <Button variant='light' onClick={() => this.filterPosts('all')}>All posts</Button>
