@@ -4,6 +4,7 @@ import { filterPostsByCaterogy } from './../actions/posts'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getAllCategories } from './../utils/ApiCalls'
+import './../styles/Toolbar.css'
 
 class Toolbar extends Component {
   newPostPage = () => {
@@ -16,27 +17,32 @@ class Toolbar extends Component {
 
   render() {
     return (
-      <Row>
-        <Col>
-        <span>Categories </span>
-          <ButtonGroup>
-            <Button variant='light' onClick={() => this.filterPosts('all')}>All posts</Button>
-            {this.props.categories.map((category, index) => (
-              <Button key={index} variant='light' onClick={() => this.filterPosts(category.name)}>{category.name}</Button>
-            ))}
-          </ButtonGroup>
-          <Button onClick={() => this.newPostPage()}>New Post</Button>
-        </Col>
-      </Row>
+      <div className="toolbar">
+        <Row>
+          <Col>
+            <Row className="justify-content-md-start">
+              <span className="ml-4 mt-2 mr-3"><b>Categories</b> </span>
+              <ButtonGroup>
+                <Button variant='light' onClick={() => this.filterPosts('all')}>All posts</Button>
+                {this.props.categories.map((category, index) => (
+                  <Button key={index} variant='light' onClick={() => this.filterPosts(category.name)}>{category.name}</Button>
+                ))}
+              </ButtonGroup>
+            </Row>
+          </Col>
+          <Col>
+            <Row className="justify-content-md-end">
+              <Button variant="success" className="mr-4" onClick={() => this.newPostPage()}>New Post</Button>
+            </Row>
+          </Col>
+        </Row>
+      </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    categories: state.categories
-  }
-}
+const mapStateToProps = state => ({ categories: state.categories })
+
 const mapDispatchToProps = dispatch => bindActionCreators({ getAllCategories, filterPostsByCaterogy }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { newPost } from './../actions/posts'
-import { Container, Col, Card, Button } from 'react-bootstrap'
+import { Container, Col, Button } from 'react-bootstrap'
 import { getAllCategories } from './../utils/ApiCalls'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
