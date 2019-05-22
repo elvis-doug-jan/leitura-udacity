@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { Row, Col, Button } from 'react-bootstrap'
 import { updatePost } from './../actions/posts'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Row, Button, Card } from 'react-bootstrap'
+import { FaSave, FaSignOutAlt } from 'react-icons/fa'
 import { getOnePostId } from './../utils/ApiCalls'
+import './../styles/EditPost.css'
 
 class EditPost extends Component {
 
@@ -12,11 +14,15 @@ class EditPost extends Component {
     contentPost: ''
   }
 
+  cancel = () => {
+    this.props.history.push(`/`)
+  }
+
   componentDidMount() {
     getOnePostId(this.props.match.params.id)
       .then(post => {
-        this.setState({post})
-        this.setState({contentPost: post.body})
+        this.setState({ post })
+        this.setState({ contentPost: post.body })
       })
   }
 
@@ -36,21 +42,30 @@ class EditPost extends Component {
       title,
       voteScore
     })
+    this.props.history.push(`/`)
   }
 
   render() {
     return (
-      <Row>
-        <Col>
-          <div>
-            <b>TITULO DO POST {this.state.post.title}</b>
-            <p>Author: <i>{this.state.post.author}</i></p>
-            <textarea value={this.state.contentPost} onChange={e => this.changeContentPost(e.target.value)}></textarea>
-            <br />
-            <Button onClick={() => this.savePost()}>Save</Button>
-            <Button variant="danger">Cancel</Button>
-          </div>
-        </Col>
+      <Row className="justify-content-md-center">
+        <Card className="cardContentNewPost">
+          <span className="inputEditTitle">
+            <b>
+              <h4>{this.state.post.title}</h4>
+            </b>
+          </span>
+          <p className="editPostAuthor"><b>Author:</b> <i>{this.state.post.author}</i></p>
+          <textarea className="editPostBody" value={this.state.contentPost} onChange={e => this.changeContentPost(e.target.value)}></textarea>
+          <br />
+          <Row className="justify-content-md-center">
+            <Button className="mr-1" onClick={() => this.savePost()}>
+              <FaSave />
+            </Button>
+            <Button variant="warning" className="ml-1" onClick={() => this.cancel()}>
+              <FaSignOutAlt />
+            </Button>
+          </Row>
+        </Card>
       </Row>
     )
   }
