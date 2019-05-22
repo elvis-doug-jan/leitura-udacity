@@ -4,6 +4,7 @@ import { filterPostsByCaterogy } from './../actions/posts'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getAllCategories } from './../utils/ApiCalls'
+import { FaPlusSquare } from 'react-icons/fa'
 import './../styles/Toolbar.css'
 
 class Toolbar extends Component {
@@ -32,7 +33,9 @@ class Toolbar extends Component {
           </Col>
           <Col>
             <Row className="justify-content-md-end">
-              <Button variant="success" className="mr-4" onClick={() => this.newPostPage()}>New Post</Button>
+              <Button variant="success" className="mr-4" onClick={() => this.newPostPage()}>
+                <FaPlusSquare/>
+              </Button>
             </Row>
           </Col>
         </Row>

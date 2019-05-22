@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { receiveAllPosts, votePost, deletePostId } from './../actions/posts'
 import moment from 'moment'
+import { FaRegFrown, FaRegGrin, FaEdit, FaTrash, FaRegComments } from 'react-icons/fa'
 import './../styles/Post.css'
 
 class Posts extends Component {
@@ -34,25 +35,54 @@ class Posts extends Component {
         <Col>
           {this.props.posts.map(post => (
             <Card key={post.id} className="cardContent">
-              <h4>{post.title}</h4>
-              <span>By: <b>{post.author}</b></span>
-              <span>
-                in <i>{post.category}</i> on <i>{moment(post.timestamp).format('DD/MM/YYYY')} {moment(post.timestamp).format('HH:mm')}</i>
+              <Row>
+                <Col md={10}>
+                  <Row className="justify-content-md-start">
+                    <h4 className="postTitle">{post.title}</h4>
+                  </Row>
+                </Col>
+                <Col md={2}>
+                  <Row className="justify-content-md-end">
+                    <Button variant="info" onClick={() => this.editPost(post)}>
+                      <FaEdit />
+                    </Button>
+                    <Button variant="danger" className="ml-3" onClick={() => this.deletePost(post.id)}>
+                      <FaTrash />
+                    </Button>
+                  </Row>
+                </Col>
+              </Row>
+              <span className="postAuthor">By: <b>{post.author}</b></span>
+              <span className="postData">
+                in <i className="categoryPost">{post.category}</i> on <i>{moment(post.timestamp).format('DD/MM/YYYY')} {moment(post.timestamp).format('HH:mm')}</i>
               </span>
               <br />
-              <div>{post.body}</div>
-              <span>
-                <b>Votes: {post.voteScore} Comments: {post.commentCount}</b>
-                <Row>
-                  <Button className="likeButton" onClick={() => this.votePost(post.id, 'upVote')}>Like</Button>
-                  <Button className="deslikeButton" variant="dark" onClick={() => this.votePost(post.id, 'downVote')}>Deslike</Button>
-                </Row>
-                <Row>
-                  <Button variant="info" onClick={() => this.editPost(post)}>Edit</Button>
-                  <Button variant="info" onClick={() => this.deletePost(post.id)}>Delete</Button>
-                </Row>
-                <Button variant="outline-primary" onClick={() => this.showCommentsPost(post.id)}>Show comments</Button>
-              </span>
+              <div className="postBody">{post.body}</div>
+              <Row>
+                <Col>
+                  Votes: <b>{post.voteScore}</b>
+                </Col>
+                <Col>
+                  <Row className="justify-content-md-end mr-1">
+                    Comments: <b>{post.commentCount}</b>
+                  </Row>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Button className="likeButton" variant="outline-primary" onClick={() => this.votePost(post.id, 'upVote')}>
+                      <FaRegGrin />
+                    </Button>
+                    <Button className="deslikeButton" variant="outline-danger" onClick={() => this.votePost(post.id, 'downVote')}>
+                      <FaRegFrown />
+                    </Button>
+                  </Row>
+                </Col>
+                <Button variant="outline-primary" className="mr-2" onClick={() => this.showCommentsPost(post.id)}>
+                  <FaRegComments />
+                </Button>
+              </Row>
             </Card>
           ))}
         </Col>
