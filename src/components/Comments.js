@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { receiveUserLogged } from './../actions/users'
+import { Row, Button, Col, Card } from 'react-bootstrap'
+import { FaRegFrown, FaRegGrin, FaEdit, FaTrash } from 'react-icons/fa'
 import { receiveAllComments, newComment, deleteComment, saveCommentEdit, voteComment } from './../actions/comments'
 import moment from 'moment'
+import './../styles/Comments.css'
 
 class Comment extends Component {
 
@@ -61,29 +64,55 @@ class Comment extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.comments.map(comment => (
-          <div key={comment.id}>
-            <h3>{comment.author}</h3>
-            <b>On <i>{moment(comment.timestamp).format('DD/MM/YYYY')}</i></b><br/>
-            <i>Vote Score: {comment.voteScore}</i>
-            <p>{comment.body}</p>
-            <button onClick={() => this.removeComment(comment.id)}>Delete Comment</button>
-            {this.state.userLogged === comment.author
-              ? <button onClick={() => this.editComment(comment)}>Edit Comment</button>
-              : <button disabled> Edit Comment</button>
-            }
-            <button onClick={() => this.voteComment(comment.id, 'upVote')}>Like</button>
-            <button onClick={() => this.voteComment(comment.id, 'downVote')}>Deslike</button>
-          </div>
-        ))}
-        <textarea onChange={event => this.newCommentState(event.target.value)} id='editComment' />
-        <br />
-        {this.state.commentEdit
-          ? <button onClick={() => this.saveEditComment(this.state.comment)}>Save Comment</button>
-          : <button onClick={() => this.postNewComment()}>New Comment</button>
-        }
-      </div>
+      <Row className="justify-content-md-center">
+        <div>
+          {this.props.comments.map(comment => (
+            <div key={comment.id} className="cardContentComment">
+              <p className="commentBody">{comment.body}</p>
+              <p className="commentAuthor"><i>By: <b>{comment.author}</b></i></p>
+              <b>On <i>{moment(comment.timestamp).format('DD/MM/YYYY')}</i></b><br />
+              <Row>
+                <i className="ml-2 mt-2">Vote Score: <b>{comment.voteScore}</b></i>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Button variant="outline-primary" className="likeButtonComment" onClick={() => this.voteComment(comment.id, 'upVote')}>
+                      <FaRegGrin />
+                    </Button>
+                    <Button variant="outline-danger" onClick={() => this.voteComment(comment.id, 'downVote')} className="deslikeButtonComment">
+                      <FaRegFrown />
+                    </Button>
+                  </Row>
+                </Col>
+                {/* <Col> */}
+                <Button variant="danger" className="mr-1" onClick={() => this.removeComment(comment.id)}>
+                  <FaTrash />
+                </Button>
+                {this.state.userLogged === comment.author
+                  ? <Button variant="info" onClick={() => this.editComment(comment)}>
+                    <FaEdit />
+                  </Button>
+                  : <Button variant="dark" disabled>
+                    <FaEdit />
+                  </Button>
+                }
+                {/* </Col> */}
+              </Row>
+            </div>
+          ))}
+          <Card className="newComment">
+            <textarea className="commentBody" onChange={event => this.newCommentState(event.target.value)} id='editComment' />
+            <br />
+            <Row className="justify-content-md-end">
+              {this.state.commentEdit
+                ? <Button variant="success" onClick={() => this.saveEditComment(this.state.comment)}>Save Comment</Button>
+                : <Button onClick={() => this.postNewComment()}>New Comment</Button>
+              }
+            </Row>
+          </Card>
+        </div>
+      </Row>
     )
   }
 }
