@@ -1,10 +1,23 @@
-import { newPostApi, getAllPosts, votePostApi, putPostApi, deletePostApi } from './../utils/ApiCalls'
+import { newPostApi, getAllPosts, votePostApi, putPostApi, deletePostApi, getAllPostsPerCategoryApi } from './../utils/ApiCalls'
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
+export const RECEIVE_ALL_POSTS_CATEGORY = 'RECEIVE_ALL_POSTS_CATEGORY'
 
 export function receiveAllPosts(posts) {
   return {
     type: RECEIVE_ALL_POSTS,
     posts
+  }
+}
+
+export function receiveAllPostsPerCategory(category) {
+  console.log('CATEGORIA', category)
+  return dispatch => {
+    return getAllPostsPerCategoryApi(category)
+      .then(posts => dispatch({
+        type: RECEIVE_ALL_POSTS_CATEGORY,
+        posts
+      }))
+      .catch(err => console.warn(err))
   }
 }
 

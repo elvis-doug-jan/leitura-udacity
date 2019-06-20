@@ -75,7 +75,19 @@ export function getOnePostId(id) {
 }
 
 export function deletePostApi(id) {
-  return axios.delete(`${urlApi}posts/${id}`, {headers})
+  return axios.delete(`${urlApi}posts/${id}`, { headers })
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO DELETAR POST POR ID', err))
+}
+
+export function getAllPostsPerCategoryApi(category) {
+  if (category === 'all') {
+    return axios.get(`${urlApi}posts`, { headers })
+      .then(res => res.data)
+      .catch(err => console.warn(`ERRO AO CONSULTAR POSTS DE ${category}`, err))
+  } else {
+    return axios.get(`${urlApi}${category}/posts`, { headers })
+      .then(res => res.data)
+      .catch(err => console.warn(`ERRO AO CONSULTAR POSTS DE ${category}`, err))
+  }
 }

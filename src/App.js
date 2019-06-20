@@ -18,7 +18,7 @@ class App extends Component {
       <Router>
       <Route path='/' component={Toolbar}/>
         <div>
-          <Route path='/' exact component={Posts}/>
+          <Route path='/:category/posts' exact component={Posts}/>
         </div>
         <Route path='/comments/:id' exact component={Comment} />
         <Route path='/new-post' exact component={NewPost} />
