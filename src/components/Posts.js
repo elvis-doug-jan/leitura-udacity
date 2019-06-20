@@ -17,7 +17,7 @@ class Posts extends Component {
   }
 
   showCommentsPost = id => {
-    this.props.history.push(`/comments/${id}`)
+    this.props.history.push(`/post/${id}`)
   }
 
   votePost = (id, vote) => {

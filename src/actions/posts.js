@@ -1,6 +1,15 @@
-import { newPostApi, getAllPosts, votePostApi, putPostApi, deletePostApi, getAllPostsPerCategoryApi } from './../utils/ApiCalls'
+import {
+  newPostApi,
+  getAllPosts,
+  votePostApi,
+  putPostApi,
+  deletePostApi,
+  getAllPostsPerCategoryApi,
+  getOnePostIdApi
+} from './../utils/ApiCalls'
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
 export const RECEIVE_ALL_POSTS_CATEGORY = 'RECEIVE_ALL_POSTS_CATEGORY'
+export const RECEIVE_ONE_POST = 'RECEIVE_ONE_POST'
 
 export function receiveAllPosts(posts) {
   return {
@@ -53,7 +62,6 @@ export function filterPostsByCaterogy(category) {
   }
 }
 
-
 export function votePost(id, vote) {
   return dispatch => {
     return votePostApi(id, vote)
@@ -90,5 +98,15 @@ export function deletePostId(id) {
             posts
           }))
       })
+  }
+}
+
+export function getOnePost(id) {
+  return dispatch => {
+    return getOnePostIdApi(id)
+      .then(post => dispatch({
+        type: RECEIVE_ONE_POST,
+        post
+      }))
   }
 }
