@@ -16,8 +16,8 @@ class App extends Component {
   render() {
     return (
       <Router>
+      <Route path='/' component={Toolbar}/>
         <div>
-          <Route path='/' exact component={Toolbar}/>
           <Route path='/' exact component={Posts}/>
         </div>
         <Route path='/comments/:id' exact component={Comment} />

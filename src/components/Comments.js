@@ -65,7 +65,7 @@ class Comment extends Component {
   render() {
     return (
       <Row className="justify-content-md-center">
-        <div>
+        <div className="cardCommentGeneral">
           {this.props.comments.map(comment => (
             <div key={comment.id} className="cardContentComment">
               <p className="commentBody">{comment.body}</p>
