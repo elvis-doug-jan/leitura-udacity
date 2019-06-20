@@ -4,7 +4,7 @@ import { handleInitialData } from './actions/index'
 import { connect } from 'react-redux'
 import Toolbar from './components/Toolbar'
 import Posts from './components/Posts'
-import Comment from './components/Comments'
+import Comment from './components/PostDetails'
 import NewPost from './components/NewPost'
 import EditPost from './components/EditPost'
 

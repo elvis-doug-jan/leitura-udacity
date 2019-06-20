@@ -4,7 +4,7 @@ import {
   deleteCommentApi,
   saveEditCommentApi,
   voteCommentApi
-} from './../utils/ApiCalls'
+} from '../utils/ApiCalls'
 export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS'
 export const NEW_COMMENT = 'NEW_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'

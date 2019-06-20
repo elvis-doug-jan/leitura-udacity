@@ -1,0 +1,23 @@
+.notFoundGeneral {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin-top: 13%
+}
+
+.mainNotFound {
+  display: flex;
+  flex-direction: row;
+  font-family: 'Courier New', Courier, monospace;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 46px;
+  border-radius: 50px;
+  min-width: 600px;
+  box-shadow: 10px 10px 20px #CCC;
+  border: 1px solid #EEE
+}

@@ -1,4 +1,4 @@
-import { RECEIVE_ALL_COMMENTS } from './../actions/comments'
+import { RECEIVE_ALL_COMMENTS } from '../actions/postDetails'
 
 const initialState = [
   {
