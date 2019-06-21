@@ -3,6 +3,6 @@ import './../styles/NotFound.css'
 
 export const NotFound = props => (
   <div className="notFoundGeneral">
-    <div className="mainNotFound">NOT FOUND</div>
+    <div className="mainNotFound">Not found!</div>
   </div>
 )
