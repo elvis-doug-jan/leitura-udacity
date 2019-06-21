@@ -15,7 +15,6 @@ const initialState = [
 ]
 
 export default function posts(state = initialState, action) {
-  console.warn('REDUCER POST', action)
   switch (action.type) {
     case RECEIVE_ALL_POSTS:
       return action.posts
