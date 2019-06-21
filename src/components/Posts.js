@@ -13,7 +13,8 @@ class Posts extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
+    const category = this.props.match.url.replace('/', '').replace('/posts', '')
+    this.props.receiveAllPostsPerCategory(category)
   }
 
   showCommentsPost = id => {

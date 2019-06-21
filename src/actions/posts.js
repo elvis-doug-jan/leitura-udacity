@@ -22,10 +22,13 @@ export function receiveAllPostsPerCategory(category) {
   console.log('CATEGORIA', category)
   return dispatch => {
     return getAllPostsPerCategoryApi(category)
-      .then(posts => dispatch({
-        type: RECEIVE_ALL_POSTS_CATEGORY,
-        posts
-      }))
+      .then(posts => {
+        console.log(posts)
+        return dispatch({
+          type: RECEIVE_ALL_POSTS_CATEGORY,
+          posts
+        })
+      })
       .catch(err => console.warn(err))
   }
 }
@@ -44,23 +47,23 @@ export function newPost(post) {
   }
 }
 
-export function filterPostsByCaterogy(category) {
-  return dispatch => {
-    return getAllPosts()
-      .then(posts => {
-        let postsList = []
-        if (category !== 'all') {
-          postsList = posts.filter(post => post.category === category)
-        } else {
-          postsList = posts
-        }
-        return dispatch({
-          type: RECEIVE_ALL_POSTS,
-          posts: postsList
-        })
-      })
-  }
-}
+// export function filterPostsByCaterogy(category) {
+//   return dispatch => {
+//     return getAllPosts()
+//       .then(posts => {
+//         let postsList = []
+//         if (category !== 'all') {
+//           postsList = posts.filter(post => post.category === category)
+//         } else {
+//           postsList = posts
+//         }
+//         return dispatch({
+//           type: RECEIVE_ALL_POSTS,
+//           posts: postsList
+//         })
+//       })
+//   }
+// }
 
 export function votePost(id, vote) {
   return dispatch => {

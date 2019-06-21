@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Row, Button, Col, ButtonGroup } from 'react-bootstrap'
-import { filterPostsByCaterogy, receiveAllPostsPerCategory} from './../actions/posts'
+import { receiveAllPostsPerCategory} from './../actions/posts'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getAllCategories, getAllPostsPerCategoryApi } from './../utils/ApiCalls'
@@ -12,12 +12,7 @@ class Toolbar extends Component {
     this.props.history.push(`/new-post`)
   }
 
-  filterPosts = category => {
-    this.props.filterPostsByCaterogy(category)
-  }
-
   changePostCategory = category => {
-    console.log('fdnjkgjndkg', category)
     this.props.receiveAllPostsPerCategory(category)
     this.props.history.push(`/${category}/posts`)
   }
