@@ -29,13 +29,16 @@ class Comment extends Component {
       title: '',
       voteScore: 0
     },
-    notFound: true
+    notFound: false
   }
 
   componentDidMount() {
     getOnePostIdApi(this.props.match.params.id)
       .then(post => {
-        console.log(post.id === undefined)
+        post.id === undefined
+          ? this.setState({ notFound: true })
+          : this.setState({ notFound: false })
+
         this.setState({ post })
         this.setState({ contentPost: post.body })
       })

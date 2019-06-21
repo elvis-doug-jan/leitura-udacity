@@ -10,6 +10,7 @@ import {
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
 export const RECEIVE_ALL_POSTS_CATEGORY = 'RECEIVE_ALL_POSTS_CATEGORY'
 export const RECEIVE_ONE_POST = 'RECEIVE_ONE_POST'
+export const VOTE_POST = 'VOTE_POST'
 
 export function receiveAllPosts(posts) {
   return {
@@ -19,11 +20,9 @@ export function receiveAllPosts(posts) {
 }
 
 export function receiveAllPostsPerCategory(category) {
-  console.log('CATEGORIA', category)
   return dispatch => {
     return getAllPostsPerCategoryApi(category)
       .then(posts => {
-        console.log(posts)
         return dispatch({
           type: RECEIVE_ALL_POSTS_CATEGORY,
           posts
@@ -68,12 +67,11 @@ export function newPost(post) {
 export function votePost(id, vote) {
   return dispatch => {
     return votePostApi(id, vote)
-      .then(() => {
-        return getAllPosts()
-          .then(posts => dispatch({
-            type: RECEIVE_ALL_POSTS,
-            posts
-          }))
+      .then((post) => {
+        dispatch({
+          type: VOTE_POST,
+          post
+        })
       })
   }
 }
