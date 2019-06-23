@@ -56,14 +56,12 @@ export default function posts(state = initialState, action) {
       const indexPostUpdated = storePost.findIndex(post => post.id === action.postUpdated.id)
       storePost.splice(indexPostUpdated, 1, action.postUpdated)
       return storePost
-    // case DELETE_POST:
-    //   const indexPostDeleted = storePost.findIndex(post => post.id === action.postDeleted.id)
-    //   storePost.splice(indexPostDeleted, 1)
-      // // storePost.splice(indexPostDeleted, 1)
-      // if (action.category !== 'all') {
-      //   return storePost.filter(post => post.category === action.category)
-      // }
-      // return storePost
+    case DELETE_POST:
+      const indexPostDeleted = storePost.findIndex(post => post.id === action.postDeleted.id)
+      storePost.splice(indexPostDeleted, 1)
+      return action.category !== 'all'
+        ? storePost.filter(post => post.category === action.category)
+        : action.posts
     default:
       return state
   }

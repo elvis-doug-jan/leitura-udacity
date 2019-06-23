@@ -4,7 +4,6 @@ import {
   votePostApi,
   putPostApi,
   deletePostApi,
-  // getAllPostsPerCategoryApi,
   getOnePostIdApi
 } from './../utils/ApiCalls'
 
@@ -24,20 +23,11 @@ export function receiveAllPosts(posts) {
 }
 
 export function receiveAllPostsPerCategory(category) {
-  // console.warn('catefoy', category)
   return dispatch => {
     return dispatch({
       type: RECEIVE_ALL_POSTS_CATEGORY,
       category
     })
-    // return getAllPostsPerCategoryApi(category)
-    //   .then(posts => {
-    //     return dispatch({
-    //       type: RECEIVE_ALL_POSTS_CATEGORY,
-    //       posts
-    //     })
-    //   })
-    //   .catch(err => console.warn(err))
   }
 }
 
@@ -49,33 +39,10 @@ export function newPost(post) {
           type: CREATE_NEW_POST,
           post: postCreated
         })
-        // return getAllPosts()
-        //   .then(posts => dispatch({
-        //     type: RECEIVE_ALL_POSTS,
-        //     posts
-        //   }))
       })
       .catch(err => console.warn(err))
   }
 }
-
-// export function filterPostsByCaterogy(category) {
-//   return dispatch => {
-//     return getAllPosts()
-//       .then(posts => {
-//         let postsList = []
-//         if (category !== 'all') {
-//           postsList = posts.filter(post => post.category === category)
-//         } else {
-//           postsList = posts
-//         }
-//         return dispatch({
-//           type: RECEIVE_ALL_POSTS,
-//           posts: postsList
-//         })
-//       })
-//   }
-// }
 
 export function votePost(id, vote) {
   return dispatch => {
@@ -97,11 +64,6 @@ export function updatePost(post) {
           type: UPDATE_POST,
           postUpdated
         })
-        // return getAllPosts()
-        //   .then(posts => dispatch({
-        //     type: RECEIVE_ALL_POSTS,
-        //     posts
-        //   }))
       )
   }
 }
@@ -109,17 +71,15 @@ export function updatePost(post) {
 export function deletePostId(id, category) {
   return dispatch => {
     return deletePostApi(id)
-      .then(() =>
-        // dispatch({
-        //   type: DELETE_POST,
-        //   postDeleted,
-        //   category
-        // })
+      .then(postDeleted =>
         getAllPosts()
-          .then(posts => dispatch({
-            type: RECEIVE_ALL_POSTS,
-            posts
-          }))
+          .then(posts =>
+            dispatch({
+              type: DELETE_POST,
+              postDeleted,
+              category,
+              posts
+            }))
       )
   }
 }
