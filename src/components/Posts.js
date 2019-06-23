@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Col, Card, Button, Row } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { receiveAllPosts, votePost, deletePostId } from './../actions/posts'
+import { receiveAllPosts, votePost, deletePostId, receiveAllPostsPerCategory } from './../actions/posts'
 import moment from 'moment'
 import { FaRegFrown, FaRegGrin, FaEdit, FaTrash, FaRegComments } from 'react-icons/fa'
 import './../styles/Post.css'
@@ -12,8 +12,13 @@ class Posts extends Component {
     post: {}
   }
 
+  componentDidMount() {
+    const category = this.props.match.url.replace('/', '').replace('/posts', '')
+    this.props.receiveAllPostsPerCategory(category)
+  }
+
   showCommentsPost = id => {
-    this.props.history.push(`/comments/${id}`)
+    this.props.history.push(`/post/${id}`)
   }
 
   votePost = (id, vote) => {
@@ -26,7 +31,8 @@ class Posts extends Component {
   }
 
   deletePost = id => {
-    this.props.deletePostId(id)
+    const category = this.props.match.url.replace('/', '').replace('/posts', '')
+    this.props.deletePostId(id, category)
   }
 
   render() {
@@ -93,6 +99,8 @@ class Posts extends Component {
 
 const mapStateToProps = ({ posts }) => ({ posts })
 
-const mapDispatchToProps = dispatch => bindActionCreators({ receiveAllPosts, votePost, deletePostId }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({
+  receiveAllPosts, votePost, deletePostId, receiveAllPostsPerCategory
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)

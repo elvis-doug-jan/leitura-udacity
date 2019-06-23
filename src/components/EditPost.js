@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Row, Button, Card } from 'react-bootstrap'
 import { FaSave, FaSignOutAlt } from 'react-icons/fa'
-import { getOnePostId } from './../utils/ApiCalls'
+import { getOnePostIdApi } from './../utils/ApiCalls'
 import './../styles/EditPost.css'
 
 class EditPost extends Component {
@@ -19,7 +19,7 @@ class EditPost extends Component {
   }
 
   componentDidMount() {
-    getOnePostId(this.props.match.params.id)
+    getOnePostIdApi(this.props.match.params.id)
       .then(post => {
         this.setState({ post })
         this.setState({ contentPost: post.body })

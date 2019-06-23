@@ -4,7 +4,7 @@ import { handleInitialData } from './actions/index'
 import { connect } from 'react-redux'
 import Toolbar from './components/Toolbar'
 import Posts from './components/Posts'
-import Comment from './components/Comments'
+import Comment from './components/PostDetails'
 import NewPost from './components/NewPost'
 import EditPost from './components/EditPost'
 
@@ -16,11 +16,11 @@ class App extends Component {
   render() {
     return (
       <Router>
+      <Route path='/' component={Toolbar}/>
         <div>
-          <Route path='/' exact component={Toolbar}/>
-          <Route path='/' exact component={Posts}/>
+          <Route path='/:category/posts' exact component={Posts}/>
         </div>
-        <Route path='/comments/:id' exact component={Comment} />
+        <Route path='/post/:id' exact component={Comment} />
         <Route path='/new-post' exact component={NewPost} />
         <Route path='/edit-post/:id' exact component={EditPost} />
       </Router>

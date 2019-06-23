@@ -1,4 +1,4 @@
-import { RECEIVE_ALL_COMMENTS } from './../actions/comments'
+import { RECEIVE_ALL_COMMENTS } from '../actions/postDetails'
 
 const initialState = [
   {
@@ -14,7 +14,6 @@ const initialState = [
 ]
 
 export default function comments(state = initialState, action) {
-  console.log('REDUCER', action.comments)
   switch (action.type) {
     case RECEIVE_ALL_COMMENTS:
       return action.comments  

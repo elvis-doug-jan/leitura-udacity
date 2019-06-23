@@ -52,7 +52,7 @@ export function voteCommentApi(id, vote) {
 
 export function newPostApi(post) {
   return axios.post(`${urlApi}posts`, post, { headers })
-    .then(res => console.log('CADASTROU NOVO POST', res.data))
+    .then(res => res.data)
     .catch(err => console.warn('ERRO', err))
 }
 
@@ -68,14 +68,26 @@ export function putPostApi(post) {
     .catch(err => console.warn('ERRO AO ATUALIZAR POST', err))
 }
 
-export function getOnePostId(id) {
+export function getOnePostIdApi(id) {
   return axios.get(`${urlApi}posts/${id}`, { headers })
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO ENCONTRAR POST POR ID', err))
 }
 
 export function deletePostApi(id) {
-  return axios.delete(`${urlApi}posts/${id}`, {headers})
+  return axios.delete(`${urlApi}posts/${id}`, { headers })
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO DELETAR POST POR ID', err))
+}
+
+export function getAllPostsPerCategoryApi(category) {
+  if (category === 'all') {
+    return axios.get(`${urlApi}posts`, { headers })
+      .then(res => res.data)
+      .catch(err => console.warn(`ERRO AO CONSULTAR POSTS DE ${category}`, err))
+  } else {
+    return axios.get(`${urlApi}${category}/posts`, { headers })
+      .then(res => res.data)
+      .catch(err => console.warn(`ERRO AO CONSULTAR POSTS DE ${category}`, err))
+  }
 }
