@@ -52,7 +52,7 @@ export function voteCommentApi(id, vote) {
 
 export function newPostApi(post) {
   return axios.post(`${urlApi}posts`, post, { headers })
-    .then(res => console.log('CADASTROU NOVO POST', res.data))
+    .then(res => res.data)
     .catch(err => console.warn('ERRO', err))
 }
 

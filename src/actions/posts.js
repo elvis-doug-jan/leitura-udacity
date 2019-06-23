@@ -7,10 +7,12 @@ import {
   getAllPostsPerCategoryApi,
   getOnePostIdApi
 } from './../utils/ApiCalls'
+
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
 export const RECEIVE_ALL_POSTS_CATEGORY = 'RECEIVE_ALL_POSTS_CATEGORY'
 export const RECEIVE_ONE_POST = 'RECEIVE_ONE_POST'
 export const VOTE_POST = 'VOTE_POST'
+export const CREATE_NEW_POST = 'CREATE_NEW_POST'
 
 export function receiveAllPosts(posts) {
   return {
@@ -21,26 +23,35 @@ export function receiveAllPosts(posts) {
 
 export function receiveAllPostsPerCategory(category) {
   return dispatch => {
-    return getAllPostsPerCategoryApi(category)
-      .then(posts => {
-        return dispatch({
-          type: RECEIVE_ALL_POSTS_CATEGORY,
-          posts
-        })
-      })
-      .catch(err => console.warn(err))
+    return dispatch({
+      type: RECEIVE_ALL_POSTS_CATEGORY,
+      category
+    })
+    // return getAllPostsPerCategoryApi(category)
+    //   .then(posts => {
+    //     return dispatch({
+    //       type: RECEIVE_ALL_POSTS_CATEGORY,
+    //       posts
+    //     })
+    //   })
+    //   .catch(err => console.warn(err))
   }
 }
 
 export function newPost(post) {
   return dispatch => {
     return newPostApi(post)
-      .then(() => {
-        return getAllPosts()
-          .then(posts => dispatch({
-            type: RECEIVE_ALL_POSTS,
-            posts
-          }))
+      .then((postCreated) => {
+        console.log('kfjsdkljflkds', postCreated)
+        return dispatch({
+          type: CREATE_NEW_POST,
+          post: postCreated
+        })
+        // return getAllPosts()
+        //   .then(posts => dispatch({
+        //     type: RECEIVE_ALL_POSTS,
+        //     posts
+        //   }))
       })
       .catch(err => console.warn(err))
   }
