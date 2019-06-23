@@ -31,7 +31,8 @@ class Posts extends Component {
   }
 
   deletePost = id => {
-    this.props.deletePostId(id)
+    const category = this.props.match.url.replace('/', '').replace('/posts', '')
+    this.props.deletePostId(id, category)
   }
 
   render() {

@@ -4,7 +4,7 @@ import {
   votePostApi,
   putPostApi,
   deletePostApi,
-  getAllPostsPerCategoryApi,
+  // getAllPostsPerCategoryApi,
   getOnePostIdApi
 } from './../utils/ApiCalls'
 
@@ -13,6 +13,8 @@ export const RECEIVE_ALL_POSTS_CATEGORY = 'RECEIVE_ALL_POSTS_CATEGORY'
 export const RECEIVE_ONE_POST = 'RECEIVE_ONE_POST'
 export const VOTE_POST = 'VOTE_POST'
 export const CREATE_NEW_POST = 'CREATE_NEW_POST'
+export const UPDATE_POST = 'UPDATE_POST'
+export const DELETE_POST = 'DELETE_POST'
 
 export function receiveAllPosts(posts) {
   return {
@@ -22,6 +24,7 @@ export function receiveAllPosts(posts) {
 }
 
 export function receiveAllPostsPerCategory(category) {
+  // console.warn('catefoy', category)
   return dispatch => {
     return dispatch({
       type: RECEIVE_ALL_POSTS_CATEGORY,
@@ -42,7 +45,6 @@ export function newPost(post) {
   return dispatch => {
     return newPostApi(post)
       .then((postCreated) => {
-        console.log('kfjsdkljflkds', postCreated)
         return dispatch({
           type: CREATE_NEW_POST,
           post: postCreated
@@ -90,26 +92,35 @@ export function votePost(id, vote) {
 export function updatePost(post) {
   return dispatch => {
     return putPostApi(post)
-      .then(() => {
-        return getAllPosts()
-          .then(posts => dispatch({
-            type: RECEIVE_ALL_POSTS,
-            posts
-          }))
-      })
+      .then(postUpdated =>
+        dispatch({
+          type: UPDATE_POST,
+          postUpdated
+        })
+        // return getAllPosts()
+        //   .then(posts => dispatch({
+        //     type: RECEIVE_ALL_POSTS,
+        //     posts
+        //   }))
+      )
   }
 }
 
-export function deletePostId(id) {
+export function deletePostId(id, category) {
   return dispatch => {
     return deletePostApi(id)
-      .then(() => {
-        return getAllPosts()
+      .then(() =>
+        // dispatch({
+        //   type: DELETE_POST,
+        //   postDeleted,
+        //   category
+        // })
+        getAllPosts()
           .then(posts => dispatch({
             type: RECEIVE_ALL_POSTS,
             posts
           }))
-      })
+      )
   }
 }
 

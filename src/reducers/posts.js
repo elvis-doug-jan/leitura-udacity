@@ -3,7 +3,9 @@ import {
   RECEIVE_ALL_POSTS_CATEGORY,
   RECEIVE_ONE_POST,
   VOTE_POST,
-  CREATE_NEW_POST
+  CREATE_NEW_POST,
+  UPDATE_POST,
+  DELETE_POST
 } from './../actions/posts'
 
 const initialState = [
@@ -11,7 +13,7 @@ const initialState = [
     author: "",
     body: "",
     category: "",
-    commentCount: 2,
+    commentCount: 0,
     deleted: false,
     id: "",
     timestamp: 0,
@@ -25,7 +27,7 @@ let storePost = [
     author: "",
     body: "",
     category: "",
-    commentCount: 2,
+    commentCount: 0,
     deleted: false,
     id: "",
     timestamp: 0,
@@ -33,21 +35,6 @@ let storePost = [
     voteScore: 0
   }
 ]
-
-let postsPerCategory = [
-  {
-    author: "",
-    body: "",
-    category: "",
-    commentCount: 2,
-    deleted: false,
-    id: "",
-    timestamp: 0,
-    title: "",
-    voteScore: 0
-  }
-]
-
 
 export default function posts(state = initialState, action) {
   switch (action.type) {
@@ -55,26 +42,28 @@ export default function posts(state = initialState, action) {
       storePost = action.posts
       return storePost
     case RECEIVE_ALL_POSTS_CATEGORY:
-      // console.log('CATEGORY', action.category)
-      action.category === 'all'
-        ? postsPerCategory = storePost
-        : postsPerCategory = storePost.filter(post => post.category === action.category)
-      return postsPerCategory
-      // storePost = action.posts
-      // console.warn('STORE POSTS', storePost)
-      // return action.posts.
+      return action.category === 'all'
+        ? storePost
+        : storePost.filter(post => post.category === action.category)
     case RECEIVE_ONE_POST:
       return action.post
     case VOTE_POST:
-      // console.log('VOTE', storePost)
       return state.map(post => post.id === action.post.id ? action.post : post)
     case CREATE_NEW_POST:
-      // console.log('>>>>>>>>>>>', state.push(action.post))
-      // console.log('***********', state.map(post => post))
       storePost.push(action.post)
-      // console.error('STORE POSTS', storePost)
       return storePost
-    // return action.post
+    case UPDATE_POST:
+      const indexPostUpdated = storePost.findIndex(post => post.id === action.postUpdated.id)
+      storePost.splice(indexPostUpdated, 1, action.postUpdated)
+      return storePost
+    // case DELETE_POST:
+    //   const indexPostDeleted = storePost.findIndex(post => post.id === action.postDeleted.id)
+    //   storePost.splice(indexPostDeleted, 1)
+      // // storePost.splice(indexPostDeleted, 1)
+      // if (action.category !== 'all') {
+      //   return storePost.filter(post => post.category === action.category)
+      // }
+      // return storePost
     default:
       return state
   }
