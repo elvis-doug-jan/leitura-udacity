@@ -1,5 +1,5 @@
 import { getInitialData } from '../utils/posts'
-import { receiveAllPosts } from '../actions/posts'
+import { receiveAllPosts, receiveAllPostsPerCategory } from '../actions/posts'
 import { receiveAllCategories } from '../actions/categories'
 import { receiveUserLogged } from './users'
 import { showLoading } from 'react-redux-loading'
@@ -9,9 +9,10 @@ export function handleInitialData() {
     dispatch(receiveUserLogged({ userLogged: 'Yourself' }))
     dispatch(showLoading())
     return getInitialData()
-      .then(({ posts, categories }) => {
-        dispatch(receiveAllPosts(posts))
-        dispatch(receiveAllCategories(categories))
+    .then(({ posts, categories }) => {
+      dispatch(receiveAllPosts(posts))
+      dispatch(receiveAllCategories(categories))
+      dispatch(receiveAllPostsPerCategory(' '))
       })
   }
 }

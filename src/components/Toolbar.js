@@ -14,7 +14,7 @@ class Toolbar extends Component {
 
   changePostCategory = category => {
     this.props.receiveAllPostsPerCategory(category)
-    this.props.history.push(`/${category}/posts`)
+    this.props.history.push(`/${category}`)
   }
 
   render() {
@@ -25,7 +25,7 @@ class Toolbar extends Component {
             <Row className="justify-content-md-start">
               <span className="ml-4 mt-2 mr-3"><b>Categories</b> </span>
               <ButtonGroup>
-                <Button variant='light' onClick={() => this.changePostCategory('all')}>All posts</Button>
+                <Button variant='light' onClick={() => this.changePostCategory(' ')}>All posts</Button>
                 <Button variant='light' onClick={() => this.changePostCategory('react')}>React</Button>
                 <Button variant='light' onClick={() => this.changePostCategory('redux')}>Redux</Button>
                 <Button variant='light' onClick={() => this.changePostCategory('udacity')}>Udacity</Button>

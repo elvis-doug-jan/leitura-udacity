@@ -13,12 +13,12 @@ class Posts extends Component {
   }
 
   componentDidMount() {
-    const category = this.props.match.url.replace('/', '').replace('/posts', '')
+    const category = this.props.match.url.replace('/', '')
     this.props.receiveAllPostsPerCategory(category)
   }
 
-  showCommentsPost = id => {
-    this.props.history.push(`/post/${id}`)
+  showCommentsPost = post => {
+    this.props.history.push(`/${post.category}/${post.id}`)
   }
 
   votePost = (id, vote) => {
@@ -31,7 +31,7 @@ class Posts extends Component {
   }
 
   deletePost = id => {
-    const category = this.props.match.url.replace('/', '').replace('/posts', '')
+    const category = this.props.match.url.replace('/', '')
     this.props.deletePostId(id, category)
   }
 
@@ -85,7 +85,7 @@ class Posts extends Component {
                     </Button>
                   </Row>
                 </Col>
-                <Button variant="outline-primary" className="mr-2" onClick={() => this.showCommentsPost(post.id)}>
+                <Button variant="outline-primary" className="mr-2" onClick={() => this.showCommentsPost(post)}>
                   <FaRegComments />
                 </Button>
               </Row>
