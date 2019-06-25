@@ -5,16 +5,25 @@ import { bindActionCreators } from 'redux'
 import { receiveAllPosts, votePost, deletePostId, receiveAllPostsPerCategory } from './../actions/posts'
 import moment from 'moment'
 import { FaRegFrown, FaRegGrin, FaEdit, FaTrash, FaRegComments } from 'react-icons/fa'
+import EditPost from './EditPost'
 import './../styles/Post.css'
 
 class Posts extends Component {
   state = {
-    post: {}
+    post: {},
+    postEdit: false
   }
 
   componentDidMount() {
     const category = this.props.match.url.replace('/', '')
     this.props.receiveAllPostsPerCategory(category)
+  }
+
+  closeDialogEdit = async () => {
+    const category = this.props.match.url.replace('/', '')
+    this.props.receiveAllPostsPerCategory(category)
+    this.setState({ postEdit: false })
+    this.props.history.push('/')
   }
 
   showCommentsPost = post => {
@@ -25,9 +34,9 @@ class Posts extends Component {
     this.props.votePost(id, vote)
   }
 
-  editPost = post => {
-    this.setState({ post })
-    this.props.history.push(`/edit-post/${post.id}`)
+  editPost = (post) => {
+    this.setState({ post: post })
+    this.setState({ postEdit: true })
   }
 
   deletePost = id => {
@@ -37,62 +46,67 @@ class Posts extends Component {
 
   render() {
     return (
-      <Container className="postComponent">
-        <Col>
-          {this.props.posts.map(post => (
-            <Card key={post.id} className="cardContent">
-              <Row>
-                <Col md={10}>
-                  <Row className="justify-content-md-start">
-                    <h4 className="postTitle">{post.title}</h4>
-                  </Row>
-                </Col>
-                <Col md={2}>
-                  <Row className="justify-content-md-end">
-                    <Button variant="info" onClick={() => this.editPost(post)}>
-                      <FaEdit />
-                    </Button>
-                    <Button variant="danger" className="ml-3" onClick={() => this.deletePost(post.id)}>
-                      <FaTrash />
-                    </Button>
-                  </Row>
-                </Col>
-              </Row>
-              <span className="postAuthor">By: <b>{post.author}</b></span>
-              <span className="postData">
-                in <i className="categoryPost">{post.category}</i> on <i>{moment(post.timestamp).format('DD/MM/YYYY')} {moment(post.timestamp).format('HH:mm')}</i>
-              </span>
-              <br />
-              <div className="postBody">{post.body}</div>
-              <Row>
-                <Col>
-                  Votes: <b>{post.voteScore}</b>
-                </Col>
-                <Col>
-                  <Row className="justify-content-md-end mr-1">
-                    Comments: <b>{post.commentCount}</b>
-                  </Row>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
+      <div>
+        {this.state.postEdit
+          ? <EditPost postObject={this.state.post} closeEditPost={() => this.closeDialogEdit()} />
+          : <Container className="postComponent">
+            <Col>
+              {this.props.posts.map(post => (
+                <Card key={post.id} className="cardContent">
                   <Row>
-                    <Button className="likeButton" variant="outline-primary" onClick={() => this.votePost(post.id, 'upVote')}>
-                      <FaRegGrin />
-                    </Button>
-                    <Button className="deslikeButton" variant="outline-danger" onClick={() => this.votePost(post.id, 'downVote')}>
-                      <FaRegFrown />
+                    <Col md={10}>
+                      <Row className="justify-content-md-start">
+                        <h4 className="postTitle">{post.title}</h4>
+                      </Row>
+                    </Col>
+                    <Col md={2}>
+                      <Row className="justify-content-md-end">
+                        <Button variant="info" onClick={() => this.editPost(post)}>
+                          <FaEdit />
+                        </Button>
+                        <Button variant="danger" className="ml-3" onClick={() => this.deletePost(post.id)}>
+                          <FaTrash />
+                        </Button>
+                      </Row>
+                    </Col>
+                  </Row>
+                  <span className="postAuthor">By: <b>{post.author}</b></span>
+                  <span className="postData">
+                    in <i className="categoryPost">{post.category}</i> on <i>{moment(post.timestamp).format('DD/MM/YYYY')} {moment(post.timestamp).format('HH:mm')}</i>
+                  </span>
+                  <br />
+                  <div className="postBody">{post.body}</div>
+                  <Row>
+                    <Col>
+                      Votes: <b>{post.voteScore}</b>
+                    </Col>
+                    <Col>
+                      <Row className="justify-content-md-end mr-1">
+                        Comments: <b>{post.commentCount}</b>
+                      </Row>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Row>
+                        <Button className="likeButton" variant="outline-primary" onClick={() => this.votePost(post.id, 'upVote')}>
+                          <FaRegGrin />
+                        </Button>
+                        <Button className="deslikeButton" variant="outline-danger" onClick={() => this.votePost(post.id, 'downVote')}>
+                          <FaRegFrown />
+                        </Button>
+                      </Row>
+                    </Col>
+                    <Button variant="outline-primary" className="mr-2" onClick={() => this.showCommentsPost(post)}>
+                      <FaRegComments />
                     </Button>
                   </Row>
-                </Col>
-                <Button variant="outline-primary" className="mr-2" onClick={() => this.showCommentsPost(post)}>
-                  <FaRegComments />
-                </Button>
-              </Row>
-            </Card>
-          ))}
-        </Col>
-      </Container>
+                </Card>
+              ))}
+            </Col>
+          </Container>
+        }
+      </div>
     )
   }
 }

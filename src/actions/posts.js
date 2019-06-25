@@ -4,7 +4,8 @@ import {
   votePostApi,
   putPostApi,
   deletePostApi,
-  getOnePostIdApi
+  getOnePostIdApi,
+  getAllPostsPerCategoryApi
 } from './../utils/ApiCalls'
 
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
@@ -23,12 +24,14 @@ export function receiveAllPosts(posts) {
 }
 
 export function receiveAllPostsPerCategory(category) {
+  console.log(category)
   if (category === ' ' || category === undefined) category = 'all'
   return dispatch => {
-    return dispatch({
-      type: RECEIVE_ALL_POSTS_CATEGORY,
-      category
-    })
+    return getAllPostsPerCategoryApi(category)
+      .then(postsList => dispatch({
+        type: RECEIVE_ALL_POSTS_CATEGORY,
+        posts: postsList
+      }))
   }
 }
 
@@ -57,14 +60,22 @@ export function votePost(id, vote) {
   }
 }
 
-export function updatePost(post) {
+export function updatePost(post, category) {
   return dispatch => {
     return putPostApi(post)
       .then(postUpdated =>
-        dispatch({
-          type: UPDATE_POST,
-          postUpdated
-        })
+        getAllPosts()
+          .then(posts =>
+            dispatch({
+              type: UPDATE_POST,
+              postUpdated,
+              category,
+              posts
+            }))
+        // dispatch({
+        //   type: UPDATE_POST,
+        //   postUpdated
+        // })
       )
   }
 }

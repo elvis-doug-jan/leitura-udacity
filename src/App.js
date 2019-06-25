@@ -21,7 +21,7 @@ class App extends Component {
         <Route path='/:category' exact component={Posts} />
         <Route path='/:category/:id' exact component={PostDetails} />
         <Route path='/new-post' exact component={NewPost} />
-        <Route path='/edit-post/:id' exact component={EditPost} />
+        {/* <Route path='/edit-post/:id' exact component={EditPost} /> */}
       </Router>
     )
   }

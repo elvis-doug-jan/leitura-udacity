@@ -11,26 +11,29 @@ class EditPost extends Component {
 
   state = {
     post: '',
-    contentPost: ''
+    contentPost: '',
+    titlePost: ''
   }
 
   cancel = () => {
-    this.props.history.push(`/`)
+    this.props.closeEditPost()
   }
 
   componentDidMount() {
-    getOnePostIdApi(this.props.match.params.id)
+    getOnePostIdApi(this.props.postObject.id)
       .then(post => {
         this.setState({ post })
         this.setState({ contentPost: post.body })
+        this.setState({ titlePost: post.title })
       })
   }
 
   changeContentPost = content => this.setState({ contentPost: content })
 
+  changeTitlePost = title => this.setState({ titlePost: title })
+
   savePost = () => {
     const { author, category, commentCount, deleted, id, timestamp, title, voteScore } = this.state.post
-
     this.props.updatePost({
       author,
       body: this.state.contentPost,
@@ -39,10 +42,10 @@ class EditPost extends Component {
       deleted,
       id,
       timestamp,
-      title,
+      title: this.state.titlePost,
       voteScore
     })
-    this.props.history.push(`/`)
+    this.props.closeEditPost()
   }
 
   render() {
@@ -51,7 +54,7 @@ class EditPost extends Component {
         <Card className="cardContentNewPost">
           <span className="inputEditTitle">
             <b>
-              <h4>{this.state.post.title}</h4>
+              <textarea value={this.state.titlePost} onChange={e => this.changeTitlePost(e.target.value)}></textarea>
             </b>
           </span>
           <p className="editPostAuthor"><b>Author:</b> <i>{this.state.post.author}</i></p>
