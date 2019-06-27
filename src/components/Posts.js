@@ -51,7 +51,7 @@ class Posts extends Component {
       <div>
         {this.state.postEdit
           ? <EditPost postObject={this.state.post} category={this.category} closeEditPost={() => this.closeDialogEdit()} />
-          : <Container className="postComponent">
+          : <Container>
             <Col>
               {this.props.posts.map(post => (
                 <Card key={post.id} className="cardContent">
