@@ -10,19 +10,32 @@ import NewPost from './components/NewPost'
 import EditPost from './components/EditPost'
 
 class App extends Component {
+  state = {
+    newPost: false
+  }
+
   componentDidMount() {
     this.props.dispatch(handleInitialData())
   }
 
+  dialogNewPost = value => this.setState({ newPost: value })
+
   render() {
     return (
-      <Router>
-        <Route path='/' component={Toolbar} />
-        <Route path='/:category' exact component={Posts} />
-        <Route path='/:category/:id' exact component={PostDetails} />
-        <Route path='/new-post' exact component={NewPost} />
-        {/* <Route path='/edit-post/:id' exact component={EditPost} /> */}
-      </Router>
+      <div>
+        <Router>
+          <Route path='/' component={() => <Toolbar openNewPost={() => this.dialogNewPost(true)}/>}/>
+          {this.state.newPost
+            ? (<NewPost closeNewPost={() => this.dialogNewPost(false)}/>)
+            : (
+              <div>
+                <Route path='/:category' exact component={Posts} />
+                <Route path='/:category/:id' exact component={PostDetails} />
+              </div>
+            )
+          }
+        </Router>
+      </div>
     )
   }
 }

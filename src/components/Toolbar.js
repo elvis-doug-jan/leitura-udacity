@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { Row, Button, Col, ButtonGroup } from 'react-bootstrap'
-import { receiveAllPostsPerCategory} from './../actions/posts'
+import { receiveAllPostsPerCategory } from './../actions/posts'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getAllCategories, getAllPostsPerCategoryApi } from './../utils/ApiCalls'
@@ -8,14 +9,9 @@ import { FaPlusSquare } from 'react-icons/fa'
 import './../styles/Toolbar.css'
 
 class Toolbar extends Component {
-  newPostPage = () => {
-    this.props.history.push(`/new-post`)
-  }
+  newPostPage = () => this.props.openNewPost()
 
-  changePostCategory = category => {
-    this.props.receiveAllPostsPerCategory(category)
-    this.props.history.push(`/${category}`)
-  }
+  changePostCategory = category => this.props.receiveAllPostsPerCategory(category)
 
   render() {
     return (
@@ -25,10 +21,18 @@ class Toolbar extends Component {
             <Row className="justify-content-md-start">
               <span className="ml-4 mt-2 mr-3"><b>Categories</b> </span>
               <ButtonGroup>
-                <Button variant='light' onClick={() => this.changePostCategory(' ')}>All posts</Button>
-                <Button variant='light' onClick={() => this.changePostCategory('react')}>React</Button>
-                <Button variant='light' onClick={() => this.changePostCategory('redux')}>Redux</Button>
-                <Button variant='light' onClick={() => this.changePostCategory('udacity')}>Udacity</Button>
+                <Link to="/ ">
+                  <Button variant='light' onClick={() => this.changePostCategory(' ')}>All posts</Button>
+                </Link>
+                <Link to="/react">
+                  <Button variant='light' onClick={() => this.changePostCategory('react')}>React</Button>
+                </Link>
+                <Link to="redux">
+                  <Button variant='light' onClick={() => this.changePostCategory('redux')}>Redux</Button>
+                </Link>
+                <Link to="udacity">
+                  <Button variant='light' onClick={() => this.changePostCategory('udacity')}>Udacity</Button>
+                </Link>
               </ButtonGroup>
             </Row>
           </Col>

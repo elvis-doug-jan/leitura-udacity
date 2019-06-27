@@ -33,7 +33,6 @@ class EditPost extends Component {
   changeTitlePost = title => this.setState({ titlePost: title })
 
   savePost = () => {
-    console.log(this.props)
     const { author, category, commentCount, deleted, id, timestamp, title, voteScore } = this.state.post
     this.props.updatePost({
       author,
