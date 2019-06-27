@@ -14,16 +14,17 @@ class Posts extends Component {
     postEdit: false
   }
 
+  category = ''
+
   componentDidMount() {
-    const category = this.props.match.url.replace('/', '')
-    this.props.receiveAllPostsPerCategory(category)
+    this.category = this.props.match.url.replace('/', '')
+    this.props.receiveAllPostsPerCategory(this.category)
   }
 
   closeDialogEdit = async () => {
-    const category = this.props.match.url.replace('/', '')
-    this.props.receiveAllPostsPerCategory(category)
+    this.props.receiveAllPostsPerCategory(this.category)
     this.setState({ postEdit: false })
-    this.props.history.push('/')
+    this.props.history.push(`/${this.category}`)
   }
 
   showCommentsPost = post => {
@@ -35,20 +36,21 @@ class Posts extends Component {
   }
 
   editPost = (post) => {
+    this.category = this.props.match.url.replace('/', '')
     this.setState({ post: post })
     this.setState({ postEdit: true })
   }
 
   deletePost = id => {
-    const category = this.props.match.url.replace('/', '')
-    this.props.deletePostId(id, category)
+    this.category = this.props.match.url.replace('/', '')
+    this.props.deletePostId(id, this.category)
   }
 
   render() {
     return (
       <div>
         {this.state.postEdit
-          ? <EditPost postObject={this.state.post} closeEditPost={() => this.closeDialogEdit()} />
+          ? <EditPost postObject={this.state.post} category={this.category} closeEditPost={() => this.closeDialogEdit()} />
           : <Container className="postComponent">
             <Col>
               {this.props.posts.map(post => (

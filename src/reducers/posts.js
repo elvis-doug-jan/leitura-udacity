@@ -43,9 +43,6 @@ export default function posts(state = initialState, action) {
       return storePost
     case RECEIVE_ALL_POSTS_CATEGORY:
       return action.posts
-      // return action.category === 'all'
-      //   ? storePost
-      //   : storePost.filter(post => post.category === action.category)
     case RECEIVE_ONE_POST:
       return action.post
     case VOTE_POST:
@@ -56,7 +53,9 @@ export default function posts(state = initialState, action) {
     case UPDATE_POST:
       const indexPostUpdated = storePost.findIndex(post => post.id === action.postUpdated.id)
       storePost.splice(indexPostUpdated, 1, action.postUpdated)
-      return storePost
+      return action.category !== 'all'
+        ? storePost.filter(post => post.category === action.category)
+        : storePost
     case DELETE_POST:
       const indexPostDeleted = storePost.findIndex(post => post.id === action.postDeleted.id)
       storePost.splice(indexPostDeleted, 1)

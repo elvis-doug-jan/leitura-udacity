@@ -33,6 +33,7 @@ class EditPost extends Component {
   changeTitlePost = title => this.setState({ titlePost: title })
 
   savePost = () => {
+    console.log(this.props)
     const { author, category, commentCount, deleted, id, timestamp, title, voteScore } = this.state.post
     this.props.updatePost({
       author,
@@ -44,7 +45,7 @@ class EditPost extends Component {
       timestamp,
       title: this.state.titlePost,
       voteScore
-    })
+    }, this.props.category)
     this.props.closeEditPost()
   }
 
@@ -74,8 +75,8 @@ class EditPost extends Component {
   }
 }
 
-// const mapStateToProps = ({ posts }) => ({ posts })
+const mapStateToProps = ({ posts }) => ({ posts })
 
 const mapDispatchToProps = dispatch => bindActionCreators({ updatePost }, dispatch)
 
-export default connect(null, mapDispatchToProps)(EditPost)
+export default connect(mapStateToProps, mapDispatchToProps)(EditPost)

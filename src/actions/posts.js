@@ -24,7 +24,6 @@ export function receiveAllPosts(posts) {
 }
 
 export function receiveAllPostsPerCategory(category) {
-  console.log(category)
   if (category === ' ' || category === undefined) category = 'all'
   return dispatch => {
     return getAllPostsPerCategoryApi(category)
@@ -61,21 +60,17 @@ export function votePost(id, vote) {
 }
 
 export function updatePost(post, category) {
+  console.warn('CATEGORY', category)
+  if (category === ' ' || category === undefined) category = 'all'
   return dispatch => {
     return putPostApi(post)
       .then(postUpdated =>
-        getAllPosts()
-          .then(posts =>
-            dispatch({
-              type: UPDATE_POST,
-              postUpdated,
-              category,
-              posts
-            }))
-        // dispatch({
-        //   type: UPDATE_POST,
-        //   postUpdated
-        // })
+        // receiveAllPostsPerCategory(category)
+        dispatch({
+          type: UPDATE_POST,
+          postUpdated,
+          category
+        })
       )
   }
 }
