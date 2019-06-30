@@ -20,7 +20,7 @@ class EditPost extends Component {
   }
 
   componentDidMount() {
-    getOnePostIdApi(this.props.postObject.id)
+    getOnePostIdApi(this.props.match.params.id)
       .then(post => {
         this.setState({ post })
         this.setState({ contentPost: post.body })

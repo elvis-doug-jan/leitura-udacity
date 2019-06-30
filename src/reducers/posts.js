@@ -42,7 +42,8 @@ export default function posts(state = initialState, action) {
       storePost = action.posts
       return storePost
     case RECEIVE_ALL_POSTS_CATEGORY:
-      return action.posts
+      console.log(action)
+      return action.postsList
     case RECEIVE_ONE_POST:
       return action.post
     case VOTE_POST:

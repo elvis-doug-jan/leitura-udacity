@@ -24,13 +24,16 @@ export function receiveAllPosts(posts) {
 }
 
 export function receiveAllPostsPerCategory(category) {
-  if (category === ' ' || category === undefined) category = 'all'
-  return dispatch => {
+  console.log('CATEGORY', `'${category}'`)
+  return async dispatch => {
     return getAllPostsPerCategoryApi(category)
-      .then(postsList => dispatch({
-        type: RECEIVE_ALL_POSTS_CATEGORY,
-        posts: postsList
-      }))
+      .then(async postsList => {
+        console.log('POST LIST', postsList)
+        return dispatch({
+          type: RECEIVE_ALL_POSTS_CATEGORY,
+          postsList
+        })
+      })
   }
 }
 

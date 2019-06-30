@@ -12,7 +12,7 @@ export function handleInitialData() {
     .then(({ posts, categories }) => {
       dispatch(receiveAllPosts(posts))
       dispatch(receiveAllCategories(categories))
-      dispatch(receiveAllPostsPerCategory(' '))
+      dispatch(receiveAllPostsPerCategory(''))
       })
   }
 }

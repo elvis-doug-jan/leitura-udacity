@@ -81,7 +81,8 @@ export function deletePostApi(id) {
 }
 
 export function getAllPostsPerCategoryApi(category) {
-  if (category === 'all') {
+  if (category === '') {
+    console.warn('djksjdklsjdfkljsl')
     return axios.get(`${urlApi}posts`, { headers })
       .then(res => res.data)
       .catch(err => console.warn(`ERRO AO CONSULTAR POSTS DE ${category}`, err))

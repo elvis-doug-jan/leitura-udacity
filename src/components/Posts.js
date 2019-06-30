@@ -18,6 +18,7 @@ class Posts extends Component {
 
   componentDidMount() {
     this.category = this.props.match.url.replace('/', '')
+    console.log('CATEGORIA NA ROTA', this.category)
     this.props.receiveAllPostsPerCategory(this.category)
   }
 
@@ -35,10 +36,11 @@ class Posts extends Component {
     this.props.votePost(id, vote)
   }
 
-  editPost = (post) => {
+  editPost = post => {
     this.category = this.props.match.url.replace('/', '')
     this.setState({ post: post })
-    this.setState({ postEdit: true })
+    this.props.history.push(`/edit-post/${post.id}`)
+    // this.setState({ postEdit: true })
   }
 
   deletePost = id => {
@@ -49,65 +51,62 @@ class Posts extends Component {
   render() {
     return (
       <div>
-        {this.state.postEdit
-          ? <EditPost postObject={this.state.post} category={this.category} closeEditPost={() => this.closeDialogEdit()} />
-          : <Container>
-            <Col>
-              {this.props.posts.map(post => (
-                <Card key={post.id} className="cardContent">
-                  <Row>
-                    <Col md={10}>
-                      <Row className="justify-content-md-start">
-                        <h4 className="postTitle">{post.title}</h4>
-                      </Row>
-                    </Col>
-                    <Col md={2}>
-                      <Row className="justify-content-md-end">
-                        <Button variant="info" onClick={() => this.editPost(post)}>
-                          <FaEdit />
-                        </Button>
-                        <Button variant="danger" className="ml-3" onClick={() => this.deletePost(post.id)}>
-                          <FaTrash />
-                        </Button>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <span className="postAuthor">By: <b>{post.author}</b></span>
-                  <span className="postData">
-                    in <i className="categoryPost">{post.category}</i> on <i>{moment(post.timestamp).format('DD/MM/YYYY')} {moment(post.timestamp).format('HH:mm')}</i>
-                  </span>
-                  <br />
-                  <div className="postBody">{post.body}</div>
-                  <Row>
-                    <Col>
-                      Votes: <b>{post.voteScore}</b>
-                    </Col>
-                    <Col>
-                      <Row className="justify-content-md-end mr-1">
-                        Comments: <b>{post.commentCount}</b>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <Row>
-                        <Button className="likeButton" variant="outline-primary" onClick={() => this.votePost(post.id, 'upVote')}>
-                          <FaRegGrin />
-                        </Button>
-                        <Button className="deslikeButton" variant="outline-danger" onClick={() => this.votePost(post.id, 'downVote')}>
-                          <FaRegFrown />
-                        </Button>
-                      </Row>
-                    </Col>
-                    <Button variant="outline-primary" className="mr-2" onClick={() => this.showCommentsPost(post)}>
-                      <FaRegComments />
-                    </Button>
-                  </Row>
-                </Card>
-              ))}
-            </Col>
-          </Container>
-        }
+        <Container>
+          <Col>
+            {this.props.posts.map(post => (
+              <Card key={post.id} className="cardContent">
+                <Row>
+                  <Col md={10}>
+                    <Row className="justify-content-md-start">
+                      <h4 className="postTitle">{post.title}</h4>
+                    </Row>
+                  </Col>
+                  <Col md={2}>
+                    <Row className="justify-content-md-end">
+                      <Button variant="info" onClick={() => this.editPost(post)}>
+                        <FaEdit />
+                      </Button>
+                      <Button variant="danger" className="ml-3" onClick={() => this.deletePost(post.id)}>
+                        <FaTrash />
+                      </Button>
+                    </Row>
+                  </Col>
+                </Row>
+                <span className="postAuthor">By: <b>{post.author}</b></span>
+                <span className="postData">
+                  in <i className="categoryPost">{post.category}</i> on <i>{moment(post.timestamp).format('DD/MM/YYYY')} {moment(post.timestamp).format('HH:mm')}</i>
+                </span>
+                <br />
+                <div className="postBody">{post.body}</div>
+                <Row>
+                  <Col>
+                    Votes: <b>{post.voteScore}</b>
+                  </Col>
+                  <Col>
+                    <Row className="justify-content-md-end mr-1">
+                      Comments: <b>{post.commentCount}</b>
+                    </Row>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Row>
+                      <Button className="likeButton" variant="outline-primary" onClick={() => this.votePost(post.id, 'upVote')}>
+                        <FaRegGrin />
+                      </Button>
+                      <Button className="deslikeButton" variant="outline-danger" onClick={() => this.votePost(post.id, 'downVote')}>
+                        <FaRegFrown />
+                      </Button>
+                    </Row>
+                  </Col>
+                  <Button variant="outline-primary" className="mr-2" onClick={() => this.showCommentsPost(post)}>
+                    <FaRegComments />
+                  </Button>
+                </Row>
+              </Card>
+            ))}
+          </Col>
+        </Container>
       </div>
     )
   }

@@ -24,16 +24,16 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <Route path='/' component={() => <Toolbar openNewPost={() => this.dialogNewPost(true)}/>}/>
-          {this.state.newPost
-            ? (<NewPost closeNewPost={() => this.dialogNewPost(false)}/>)
-            : (
-              <div>
-                <Route path='/:category' exact component={Posts} />
-                <Route path='/:category/:id' exact component={PostDetails} />
-              </div>
-            )
-          }
+          <Route path='/' component={Toolbar} />
+          <Route path='/react' exact component={Posts} />
+          <Route path='/redux' exact component={Posts} />
+          <Route path='/udacity' exact component={Posts} />
+          <Route path='/' exact component={Posts} />
+          <Route path='/new-post' component={NewPost} />
+          <Route path='/edit-post/:id' exact component={EditPost} />
+          <Route path='/react/:id' exact component={PostDetails} />
+          <Route path='/udacity/:id' exact component={PostDetails} />
+          <Route path='/redux/:id' exact component={PostDetails} />
         </Router>
       </div>
     )

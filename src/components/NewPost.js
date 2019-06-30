@@ -32,7 +32,7 @@ class NewPost extends Component {
     this.setState({ body: '' })
     this.setState({ category: '' })
     this.setState({ title: '' })
-    this.props.closeNewPost()
+    this.props.history.push('/')
   }
 
   setBodyPost = bodyPost => {
