@@ -68,7 +68,7 @@ export function putPostApi(post) {
     .catch(err => console.warn('ERRO AO ATUALIZAR POST', err))
 }
 
-export function getOnePostIdApi(id) {
+export async function getOnePostIdApi(id) {
   return axios.get(`${urlApi}posts/${id}`, { headers })
     .then(res => res.data)
     .catch(err => console.warn('ERRO AO ENCONTRAR POST POR ID', err))

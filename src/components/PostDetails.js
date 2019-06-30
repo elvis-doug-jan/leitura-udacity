@@ -18,17 +18,15 @@ class Comment extends Component {
     userLogged: '',
     commentEdited: false,
     commentEditId: '',
-    post: {
-      author: '',
-      body: '',
-      category: '',
-      commentCount: 0,
-      deleted: false,
-      id: '',
-      timestamp: 0,
-      title: '',
-      voteScore: 0
-    },
+    author: '',
+    body: '',
+    category: '',
+    commentCount: 0,
+    deleted: false,
+    id: '',
+    timestamp: 0,
+    title: '',
+    voteScore: 0,
     notFound: false
   }
 
@@ -39,8 +37,7 @@ class Comment extends Component {
           ? this.setState({ notFound: true })
           : this.setState({ notFound: false })
 
-        this.setState({ post })
-        this.setState({ contentPost: post.body })
+        this.setState({ ...post })
       })
     this.props.receiveAllComments(this.props.match.params.id)
     this.setState({ userLogged: this.props.user.userLogged })
@@ -52,7 +49,7 @@ class Comment extends Component {
     }, 500)
   }
 
-  postNewComment = () => {
+  postNewComment = async () => {
     const comment = {
       author: this.state.userLogged,
       body: this.state.newComment,
@@ -62,11 +59,13 @@ class Comment extends Component {
       parentId: this.props.match.params.id,
       voteScore: 0
     }
-
+    this.setState({ commentCount: (this.state.commentCount + 1) })
     this.props.newComment(comment)
+    document.getElementById('editComment').value = ''
   }
 
   removeComment = id => {
+    this.setState({ commentCount: (this.state.commentCount - 1) })
     this.props.deleteComment(id)
   }
 
@@ -97,17 +96,17 @@ class Comment extends Component {
                 <Card className="cardContentPostDetail">
                   <span className="inputEditTitle">
                     <b>
-                      <h4>{this.state.post.title}</h4>
+                      <h4>{this.state.title}</h4>
                     </b>
                   </span>
-                  <p className="editPostAuthor"><b>Author:</b> <i>{this.state.post.author}</i></p>
-                  <span>on <i>{moment(this.state.post.timestamp).format('DD/MM/YYYY HH:mm')}</i> in <i>{this.state.post.category}</i></span>
+                  <p className="editPostAuthor"><b>Author:</b> <i>{this.state.author}</i></p>
+                  <span>on <i>{moment(this.state.timestamp).format('DD/MM/YYYY HH:mm')}</i> in <i>{this.state.category}</i></span>
                   <Card className="bodyPostDetail">
-                    {this.state.post.body}
+                    {this.state.body}
                   </Card>
                   <br />
                   <Row className="justify-content-md-end">
-                    <span><i>Vote Score:</i> <b>{this.state.post.voteScore}</b> <i>Comment count:</i> <b>{this.state.post.commentCount}</b></span>
+                    <span><i>Vote Score:</i> <b>{this.state.voteScore}</b> <i>Comment count:</i> <b>{this.state.commentCount}</b></span>
                   </Row>
                 </Card>
               </Row>
