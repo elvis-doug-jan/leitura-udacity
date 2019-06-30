@@ -62,12 +62,12 @@ export function votePost(id, vote) {
   }
 }
 
-export function updatePost(post, category) {
+export async function updatePost(post, category) {
   console.warn('CATEGORY', category)
   if (category === ' ' || category === undefined) category = 'all'
   return dispatch => {
     return putPostApi(post)
-      .then(postUpdated =>
+      .then(async postUpdated =>
         // receiveAllPostsPerCategory(category)
         dispatch({
           type: UPDATE_POST,

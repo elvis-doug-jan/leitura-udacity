@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { receiveUserLogged } from '../actions/users'
 import { Row, Button, Col, Card } from 'react-bootstrap'
 import { FaRegFrown, FaRegGrin, FaEdit, FaTrash } from 'react-icons/fa'
-import { getOnePost } from '../actions/posts'
+import { getOnePost, deletePostId, receiveAllPostsPerCategory } from '../actions/posts'
 import { getOnePostIdApi } from '../utils/ApiCalls'
 import { receiveAllComments, newComment, deleteComment, saveCommentEdit, voteComment } from '../actions/postDetails'
 import moment from 'moment'
@@ -76,6 +76,14 @@ class Comment extends Component {
     document.getElementById('editComment').value = comment.body
   }
 
+
+  deletePost = id => {
+    const category = this.props.match.url.replace('/', '')
+    this.props.deletePostId(id, category)
+    this.props.receiveAllPostsPerCategory('')
+      .then(() => this.props.history.push('/'))
+  }
+
   saveEditComment = () => {
     this.props.saveCommentEdit(this.state.commentEditId, this.state.newComment)
     document.getElementById('editComment').value = ''
@@ -94,11 +102,16 @@ class Comment extends Component {
             <div>
               <Row className="justify-content-md-center">
                 <Card className="cardContentPostDetail">
-                  <span className="inputEditTitle">
-                    <b>
-                      <h4>{this.state.title}</h4>
-                    </b>
-                  </span>
+                  <Row className="justify-content-md-end">
+                    <Button variant="outline-danger" className="mr-1" onClick={() => this.deletePost(this.state.id)}>
+                      <FaTrash />
+                    </Button>
+                    <span className="inputEditTitle">
+                      <b>
+                        <h4>{this.state.title}</h4>
+                      </b>
+                    </span>
+                  </Row>
                   <p className="editPostAuthor"><b>Author:</b> <i>{this.state.author}</i></p>
                   <span>on <i>{moment(this.state.timestamp).format('DD/MM/YYYY HH:mm')}</i> in <i>{this.state.category}</i></span>
                   <Card className="bodyPostDetail">
@@ -170,7 +183,7 @@ class Comment extends Component {
 const mapStateToProps = ({ comments, user }) => ({ comments, user })
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-  { receiveAllComments, getOnePost, receiveUserLogged, newComment, deleteComment, saveCommentEdit, voteComment },
+  { receiveAllComments, getOnePost, receiveUserLogged, newComment, deleteComment, saveCommentEdit, voteComment, deletePostId, receiveAllPostsPerCategory },
   dispatch
 )
 
