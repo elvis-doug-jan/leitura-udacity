@@ -18,21 +18,32 @@ class NewPost extends Component {
   }
 
   createPost = () => {
-    const { title, author, category, body } = this.state
+    const valuesPost = Object.values(this.state)
 
-    this.props.newPost({
-      id: v4(),
-      timestamp: Date.now(),
-      title,
-      author,
-      category,
-      body
-    })
+    const clearState = () => {
+      this.setState({ body: '' })
+      this.setState({ category: '' })
+      this.setState({ title: '' })
+      this.props.history.push('/')
+    }
 
-    this.setState({ body: '' })
-    this.setState({ category: '' })
-    this.setState({ title: '' })
-    this.props.history.push('/')
+    const save = () => {
+      const { title, author, category, body } = this.state
+      this.props.newPost({
+        id: v4(),
+        timestamp: Date.now(),
+        title,
+        author,
+        category,
+        body
+      })
+      clearState()
+    }
+
+
+    valuesPost.every(element => element !== "")
+      ? save()
+      : alert('Fill in all the fields!')
   }
 
   setBodyPost = bodyPost => {

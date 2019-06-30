@@ -5,20 +5,17 @@ import { bindActionCreators } from 'redux'
 import { receiveAllPosts, votePost, deletePostId, receiveAllPostsPerCategory } from './../actions/posts'
 import moment from 'moment'
 import { FaRegFrown, FaRegGrin, FaEdit, FaTrash, FaRegComments } from 'react-icons/fa'
-import EditPost from './EditPost'
 import './../styles/Post.css'
 
 class Posts extends Component {
   state = {
-    post: {},
-    postEdit: false
+    post: {}
   }
 
   category = ''
 
   componentDidMount() {
     this.category = this.props.match.url.replace('/', '')
-    console.log('CATEGORIA NA ROTA', this.category)
     this.props.receiveAllPostsPerCategory(this.category)
   }
 
@@ -40,7 +37,6 @@ class Posts extends Component {
     this.category = this.props.match.url.replace('/', '')
     this.setState({ post: post })
     this.props.history.push(`/edit-post/${post.id}`)
-    // this.setState({ postEdit: true })
   }
 
   deletePost = id => {
