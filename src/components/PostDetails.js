@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { receiveUserLogged } from '../actions/users'
 import { Row, Button, Col, Card } from 'react-bootstrap'
 import { FaRegFrown, FaRegGrin, FaEdit, FaTrash } from 'react-icons/fa'
-import { getOnePost, deletePostId, receiveAllPostsPerCategory } from '../actions/posts'
+import { getOnePost, deletePostId, receiveAllPostsPerCategory, votePost } from '../actions/posts'
 import { getOnePostIdApi } from '../utils/ApiCalls'
 import { receiveAllComments, newComment, deleteComment, saveCommentEdit, voteComment } from '../actions/postDetails'
 import moment from 'moment'
@@ -76,6 +76,12 @@ class Comment extends Component {
     document.getElementById('editComment').value = comment.body
   }
 
+  votePost = (id, vote) => {
+    vote === 'upVote'
+      ? this.setState({ voteScore: (this.state.voteScore + 1) })
+      : this.setState({ voteScore: (this.state.voteScore - 1) })
+    this.props.votePost(id, vote)
+  }
 
   deletePost = id => {
     const category = this.props.match.url.replace('/', '')
@@ -83,6 +89,8 @@ class Comment extends Component {
     this.props.receiveAllPostsPerCategory('')
       .then(() => this.props.history.push('/'))
   }
+
+  editPost = id => this.props.history.push(`/edit-post/${id}`)
 
   saveEditComment = () => {
     this.props.saveCommentEdit(this.state.commentEditId, this.state.newComment)
@@ -106,6 +114,9 @@ class Comment extends Component {
                     <Button variant="outline-danger" className="mr-1" onClick={() => this.deletePost(this.state.id)}>
                       <FaTrash />
                     </Button>
+                    <Button variant="outline-info" className="mr-1" onClick={() => this.editPost(this.state.id)}>
+                      <FaEdit />
+                    </Button>
                     <span className="inputEditTitle">
                       <b>
                         <h4>{this.state.title}</h4>
@@ -119,6 +130,16 @@ class Comment extends Component {
                   </Card>
                   <br />
                   <Row className="justify-content-md-end">
+                    <Col>
+                      <Row>
+                        <Button className="likeButton" variant="outline-primary" onClick={() => this.votePost(this.state.id, 'upVote')}>
+                          <FaRegGrin />
+                        </Button>
+                        <Button className="deslikeButton" variant="outline-danger" onClick={() => this.votePost(this.state.id, 'downVote')}>
+                          <FaRegFrown />
+                        </Button>
+                      </Row>
+                    </Col>
                     <span><i>Vote Score:</i> <b>{this.state.voteScore}</b> <i>Comment count:</i> <b>{this.state.commentCount}</b></span>
                   </Row>
                 </Card>
@@ -183,7 +204,7 @@ class Comment extends Component {
 const mapStateToProps = ({ comments, user }) => ({ comments, user })
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-  { receiveAllComments, getOnePost, receiveUserLogged, newComment, deleteComment, saveCommentEdit, voteComment, deletePostId, receiveAllPostsPerCategory },
+  { receiveAllComments, getOnePost, receiveUserLogged, newComment, deleteComment, saveCommentEdit, votePost, voteComment, deletePostId, receiveAllPostsPerCategory },
   dispatch
 )
 
