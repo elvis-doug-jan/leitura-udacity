@@ -24,11 +24,9 @@ export function receiveAllPosts(posts) {
 }
 
 export function receiveAllPostsPerCategory(category) {
-  console.log('CATEGORY', `'${category}'`)
   return async dispatch => {
     return getAllPostsPerCategoryApi(category)
       .then(async postsList => {
-        console.log('POST LIST', postsList)
         return dispatch({
           type: RECEIVE_ALL_POSTS_CATEGORY,
           postsList
@@ -62,12 +60,11 @@ export function votePost(id, vote) {
   }
 }
 
-export async function updatePost(post, category) {
-  console.warn('CATEGORY', category)
+export function updatePost(post, category) {
   if (category === ' ' || category === undefined) category = 'all'
   return dispatch => {
     return putPostApi(post)
-      .then(async postUpdated =>
+      .then(postUpdated =>
         // receiveAllPostsPerCategory(category)
         dispatch({
           type: UPDATE_POST,

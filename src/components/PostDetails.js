@@ -117,7 +117,7 @@ class Comment extends Component {
                     <Button variant="outline-info" className="mr-1" onClick={() => this.editPost(this.state.id)}>
                       <FaEdit />
                     </Button>
-                    <span className="inputEditTitle">
+                    <span className="postTitle">
                       <b>
                         <h4>{this.state.title}</h4>
                       </b>

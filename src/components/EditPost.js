@@ -15,9 +15,7 @@ class EditPost extends Component {
     titlePost: ''
   }
 
-  cancel = () => {
-    this.props.closeEditPost()
-  }
+  cancel = () => this.props.history.push('/')
 
   componentDidMount() {
     getOnePostIdApi(this.props.match.params.id)
@@ -45,20 +43,26 @@ class EditPost extends Component {
       title: this.state.titlePost,
       voteScore
     }, this.props.category)
-    this.props.closeEditPost()
+    this.props.history.push('/')
   }
 
   render() {
     return (
       <Row className="justify-content-md-center">
         <Card className="cardContentNewPost">
-          <span className="inputEditTitle">
+          <span>
             <b>
-              <textarea value={this.state.titlePost} onChange={e => this.changeTitlePost(e.target.value)}></textarea>
+              <span>Title:</span>
+              <textarea value={this.state.titlePost} onChange={e => this.changeTitlePost(e.target.value)} className="editPostField"></textarea>
             </b>
           </span>
           <p className="editPostAuthor"><b>Author:</b> <i>{this.state.post.author}</i></p>
-          <textarea className="editPostBody" value={this.state.contentPost} onChange={e => this.changeContentPost(e.target.value)}></textarea>
+          <span>
+            <b>
+              <span>Content:</span>
+              <textarea className="editPostBody" value={this.state.contentPost} onChange={e => this.changeContentPost(e.target.value)}></textarea>
+            </b>
+          </span>
           <br />
           <Row className="justify-content-md-center">
             <Button className="mr-1" onClick={() => this.savePost()}>
